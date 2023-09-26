@@ -1,0 +1,47 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    overflow: hidden; /* Para evitar a rolagem da página */
+}
+
+.topo a {
+    color: #000;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+  
+.topo a:hover {
+    background-color: #fff;
+    color: red;
+}
+
+.content {
+    display: flex;
+    position: relative; 
+    height: 100vh; 
+}
+
+
+.imageLogo {
+    max-width: 4%; 
+    max-height: 10%;
+    margin-left: 15px;
+    margin-right: 20px;
+}
+
+.barra-pesquisa {
+    width: 300px;
+    background-color: #fff;
+    position: absolute;
+    top: 40%;
+    right: 10%;
+    transform: translateY(-30%); 
+    padding: 40px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 1);
+    border-radius: 10px; 
+  }
+  
+
