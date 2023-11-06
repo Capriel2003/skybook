@@ -26,8 +26,8 @@
 
 
 .imageLogo {
-    max-width: 10px;
-    max-height: 10px;
+    max-width: 50px;
+    max-height: 50px;
     margin-left: 15px;
     margin-right: 20px;
 }
@@ -36,7 +36,7 @@
     width: 300px;
     background-color: #fff;
     position: absolute;
-    top: 40%;
+    top: 30%;
     right: 10%;
     transform: translateY(-30%);
     padding: 40px;
@@ -45,6 +45,3 @@
 }
 
 
-.teste{
-    background-color: black;
-}

@@ -8,11 +8,12 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.util.*
+import kotlinx.coroutines.flow.callbackFlow
 
 fun Application.configureRouting() {
     routing {
         static("/static") {
-            resources("templates/css")
+            resources("templates")
         }
         get("/") {
             call.respondRedirect("articles")
@@ -59,6 +60,22 @@ fun Application.configureRouting() {
                     }
                 }
             }
+            get("login"){
+                call.respond(FreeMarkerContent("login.ftl", model=null))
+            }
+            get("cadastro"){
+                call.respond(FreeMarkerContent("cadastro.ftl", model = null))
+            }
+            get("home"){
+                call.respond(FreeMarkerContent("home.ftl", model = null))
+            }
+
+
+
+
         }
+
+
+
     }
 }
