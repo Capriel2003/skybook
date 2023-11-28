@@ -3,21 +3,9 @@
 <@layout.header>
     <div class="body-log">
         <div class="login">
-            <h2 class="top-log">Cadastre-se</h2>
+            <h2 class="top-log">Escolha um voo de ida</h2>
 
             <div class="barra-login">
-                <form>
-                    <label for="nome">Nome Completo:</label>
-                    <input type="text" id="nome" name="nome" required>
-
-                    <label for="email">Email:</label>
-                    <input type="text" id="email" name="email" required>
-
-                    <label for="senha">Senha:</label>
-                    <input type="password" id="senha" name="senha" required>
-
-                    <button type="submit" class="botao-log">Cadastrar</button>
-                </form>
             </div>
 
             <div class="bot-log">
