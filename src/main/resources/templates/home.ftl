@@ -4,6 +4,8 @@
     <div>
         <div class="content">
 
+
+
             <object id="mapa" data="/static/files/map.svg" type="image/svg+xml" onload="setMapEvents()"></object>
 
 
@@ -11,7 +13,7 @@
             <div class="barra-pesquisa">
                 <h2>Reserva de Voos</h2>
 
-                <form>
+                <form action="/articles/teste" method="post">
                     <span>Origem</span>
                     <select onchange="validaPais(true)" id="origem" name="origem">
                         <option value="none" selected disabled hidden>Selecione uma opção</option>
@@ -35,9 +37,10 @@
                         <option value="nlogonia">Nlogonia</option>
                         <option value="tocantins">Tocantins</option>
                     </select>
+
                     <div>Data</div>
 
-                    <input type="date" name="date" id="data" min = "">
+                    <input type="date" name="data" id="data" min = "">
 
                     <script>
                         date = new Date();
@@ -48,8 +51,8 @@
                         console.log(data_hoje)
                         document.getElementById("data").min  = data_hoje;
                     </script>
-
                     <button id="confirmar">Pesquisar</button>
+
                 </form>
             </div>
 

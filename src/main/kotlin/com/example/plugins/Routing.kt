@@ -69,13 +69,14 @@ fun Application.configureRouting() {
             get("home"){
                 call.respond(FreeMarkerContent("home.ftl", model = null))
             }
-
-
-
-
+            post("teste") {
+                val formParameters = call.receiveParameters()
+                voos.dataVoo = formParameters.getOrFail("data")
+                voos.origem = formParameters.getOrFail("origem")
+                voos.destino = formParameters.getOrFail("destino")
+                call.respond(FreeMarkerContent("new.ftl", model = null))
+                call.respondRedirect("/articles")
+            }
         }
-
-
-
     }
 }

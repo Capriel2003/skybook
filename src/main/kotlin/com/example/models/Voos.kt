@@ -21,4 +21,4 @@ private constructor(
     }
 }
 
-val voos = mutableListOf<Voos>()         
+var voos = Voos.newEntry("", "", "")
