@@ -5,6 +5,7 @@
         <h3>
             ${article.title}
         </h3>
+        </h3>
         <p>
             ${article.body}
         </p>

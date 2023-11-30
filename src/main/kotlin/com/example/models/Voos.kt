@@ -3,22 +3,15 @@ package com.example.models
 import java.util.concurrent.atomic.AtomicInteger
 
 class Voos
-private constructor(
-    val id: Int, 
-    var origem: String, 
-    var destino: String, 
-    var dataVoo: String
-    ) {
-
+private constructor(val id: Int, var origem: String, var destino: String) {
     companion object {
         private val idCounter = AtomicInteger()
 
-        fun newEntry(
-            origem: String, 
-            destino: String, 
-            dataVoo: String
-        )  = Voos(idCounter.getAndIncrement(), origem, destino, dataVoo)
+        fun newEntry(origem: String, destino: String) = Voos(idCounter.getAndIncrement(), origem, destino)
     }
 }
 
-var voos = Voos.newEntry("", "", "")
+val listaVoos = mutableListOf(Voos.newEntry(
+    "Sao Paulo",
+    "Belo Horizonte"
+))

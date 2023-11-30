@@ -14,6 +14,7 @@
                 integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
                 crossorigin="anonymous"></script>
         <script defer src="/static/javaScript/animationMap.js"></script>
+        <script defer src="/static/javaScript/storage.js"></script>
 
     </head>
 
@@ -27,13 +28,14 @@
                     aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <div class="collapse navbar-collapse" class="topo" id="navbarTogglerDemo02">
             </div>
 
             <div class="topo">
                 <a href="/articles/home">Home</a>
                 <a href="#">Promoções</a>
-                <a href="/articles/cadastro">Cadastro</a>
+                <a href="/articles/cadastros" id="sumir1" style="display: block">Cadastro</a>
+                <a>Nome</a>
             </div>
         </div>
     </nav>

@@ -8,7 +8,6 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.util.*
-import kotlinx.coroutines.flow.callbackFlow
 
 fun Application.configureRouting() {
     routing {
@@ -60,23 +59,52 @@ fun Application.configureRouting() {
                     }
                 }
             }
+
+
+
+
             get("login"){
                 call.respond(FreeMarkerContent("login.ftl", model=null))
             }
-            get("cadastro"){
+
+            get("lisCad"){
+                call.respond(FreeMarkerContent("mapacadasatro.ftl", mapOf("cadastros" to cadastros)))            }
+            get("cadastros"){
                 call.respond(FreeMarkerContent("cadastro.ftl", model = null))
+            }
+            post("cadastros"){
+                val formParameters = call.receiveParameters()
+                val nome = formParameters.getOrFail("nome")
+                val email = formParameters.getOrFail("email")
+                val senha = formParameters.getOrFail("senha")
+                val novosDados = Cadastro.newEntry(nome, email, senha)
+                cadastros.add(novosDados)
+                application.log.info(novosDados.id.toString())
+                call.respondRedirect("/articles/cadastros/${novosDados.id}")
+            }
+            get("cadastros/{id}"){
+                val id = call.parameters.getOrFail<Int>("id").toInt()
+                application.log.info(id.toString())
+                application.log.info("to cerrto")
+                application.log.info(cadastros[1].nome)
+                application.log.info(cadastros[1].id.toString())
+                call.respond(FreeMarkerContent("listacadastro.ftl", mapOf("cadastros" to cadastros)))
             }
             get("home"){
                 call.respond(FreeMarkerContent("home.ftl", model = null))
             }
-            post("teste") {
-                val formParameters = call.receiveParameters()
-                voos.dataVoo = formParameters.getOrFail("data")
-                voos.origem = formParameters.getOrFail("origem")
-                voos.destino = formParameters.getOrFail("destino")
-                call.respond(FreeMarkerContent("new.ftl", model = null))
-                call.respondRedirect("/articles")
+
+            get("informacoes"){
+                call.respond(FreeMarkerContent("info-pessoa.ftl", model = null))
             }
+
+
+
+
+
         }
+
+
+
     }
 }

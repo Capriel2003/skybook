@@ -7,27 +7,33 @@ var destino = null;
 
 //Essa aplicacao eh ficticia e nao esta de acordo com a realidade
 const paises = {
-    africa: {
-        nome: "África",
-    },
-    mato: {
-        nome: "Mato Grosso",
-    },
-    minas: {
-        nome: "Minas Gerais",
-    },
-    nlogonia: {
-        nome: "Nlogonia",
-    },
-    pascoa: {
-        nome: "Páscoa",
-    },
-    tocantins: {
-        nome: "Tocantins",
-    },
-    america: {
-        nome: "America",
-    },
+    AC:{nome: "Acre",},
+    AL:{nome: "Alagoas",},
+    AM:{nome: "Amazonas",},
+    AP:{nome: "Amapá",},
+    BA:{nome: "Bahia",},
+    CE:{nome: "Ceará",},
+    DF:{nome: "Distrito Federal",},
+    ES:{nome: "Espírito Santo",},
+    GO:{nome: "Goiás",},
+    MA:{nome: "Maranhão",},
+    MG:{nome: "Minas Gerais",},
+    MS:{nome: "Mato Grosso do Sul",},
+    MT:{nome: "Mato Grosso",},
+    PA:{nome: "Pará",},
+    PB:{nome: "Paraíba",},
+    PE:{nome: "Pernambuco",},
+    PI:{nome: "Piauí",},
+    PR:{nome: "Paraná",},
+    RJ:{nome: "Rio de Janeiro",},
+    RN:{nome: "Rio Grande do Norte",},
+    RO:{nome: "Rondônia",},
+    RR:{nome: "Roraima",},
+    RS:{nome: "Rio Grande do Sul",},
+    SC:{nome: "Santa Catarina",},
+    SE:{nome: "Sergipe",},
+    SP:{nome: "São Paulo",},
+    TO:{nome: "Tocantins",},
 };
 
 
@@ -45,7 +51,7 @@ function changeDestiny(element, color, value, destiny) {
 }
 
 /*
-funcao que atribui eventos aos paises 
+funcao que atribui eventos aos paises
 e adiciona o html ao JSON dos paises
 */
 function setMapEvents() {
@@ -107,5 +113,3 @@ if (packageOptions != null) {
         });
     });
 }
-
-console.log("testt")
