@@ -35,9 +35,20 @@
                         <option value="nlogonia">Nlogonia</option>
                         <option value="tocantins">Tocantins</option>
                     </select>
-
                     <div>Data</div>
-                    <input type="date" name="date" id="data">
+
+                    <input type="date" name="date" id="data" min = "">
+
+                    <script>
+                        date = new Date();
+                        ano = date.getFullYear();
+                        mes = date.getMonth() + 1;
+                        dia = date.getDate();
+                        data_hoje = ano + "-" + mes + "-" + dia;
+                        console.log(data_hoje)
+                        document.getElementById("data").min  = data_hoje;
+                    </script>
+
                     <button id="confirmar">Pesquisar</button>
                 </form>
             </div>
