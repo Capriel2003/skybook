@@ -165,6 +165,11 @@ fun Application.configureRouting() {
                 call.respond(FreeMarkerContent("pagamento.ftl", mapOf("pessoa" to pessoa)))
             }
 
+            get("recibo"){
+                call.respond(FreeMarkerContent("print.html", mapOf("pessoa" to pessoa)))
+                application.log.info(pessoa.nome)
+            }
+
 
         }
 
