@@ -9,17 +9,30 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.util.*
 
+
 fun Application.configureRouting() {
     routing {
         static("/static") {
             resources("templates")
         }
         get("/") {
-            call.respondRedirect("articles")
+            call.respondRedirect("skybook")
         }
 
-        route("articles") {
+        route("skybook") {
             get {
+                val userDataCookie = call.request.cookies["userData"]
+                if (userDataCookie != null) {
+                    application.log.info("zz2zz")
+                    val dados = getCadastroByName(userDataCookie)
+                    application.log.info(userDataCookie)
+
+                    pessoa.nome = dados?.nome.toString()
+                    pessoa.email = dados?.email.toString()
+                    pessoa.senha = dados?.senha.toString()
+
+                    call.respond(FreeMarkerContent("homecadastrado.ftl", mapOf("pessoa" to pessoa)))
+                }
                 call.respond(FreeMarkerContent("index.ftl", mapOf("articles" to articles)))
             }
             get("new") {
@@ -31,7 +44,7 @@ fun Application.configureRouting() {
                 val body = formParameters.getOrFail("body")
                 val newEntry = Article.newEntry(title, body)
                 articles.add(newEntry)
-                call.respondRedirect("/articles/${newEntry.id}")
+                call.respondRedirect("/skybook/${newEntry.id}")
             }
             get("{id}") {
                 val id = call.parameters.getOrFail<Int>("id").toInt()
@@ -51,11 +64,11 @@ fun Application.configureRouting() {
                         val body = formParameters.getOrFail("body")
                         articles[index].title = title
                         articles[index].body = body
-                        call.respondRedirect("/articles/$id")
+                        call.respondRedirect("/skybook/$id")
                     }
                     "delete" -> {
                         articles.removeIf { it.id == id }
-                        call.respondRedirect("/articles")
+                        call.respondRedirect("/skybook")
                     }
                 }
             }
@@ -80,18 +93,27 @@ fun Application.configureRouting() {
                 val novosDados = Cadastro.newEntry(nome, email, senha)
                 cadastros.add(novosDados)
                 application.log.info(novosDados.id.toString())
-                call.respondRedirect("/articles/cadastros/${novosDados.id}")
+
+                call.response.cookies.append("userData","${novosDados.nome}")
+                application.log.info("cadastrado")
+
+                call.respondRedirect("/skybook/cadastros/${novosDados.id}")
             }
             get("cadastros/{id}"){
                 val id = call.parameters.getOrFail<Int>("id").toInt()
-                application.log.info(id.toString())
-                application.log.info("to cerrto")
-                application.log.info(cadastros[1].nome)
-                application.log.info(cadastros[1].id.toString())
                 call.respond(FreeMarkerContent("listacadastro.ftl", mapOf("cadastros" to cadastros)))
             }
             get("home"){
-                call.respond(FreeMarkerContent("home.ftl", model = null))
+                val userDataCookie = call.request.cookies["userData"]
+                application.log.info(userDataCookie)
+                if (userDataCookie != null) {
+                    val dados = getCadastroByName(userDataCookie)
+                    pessoa.nome = dados?.nome.toString()
+                    pessoa.email = dados?.email.toString()
+                    pessoa.senha = dados?.senha.toString()
+                    call.respond(FreeMarkerContent("homecadastrado.ftl", mapOf("pessoa" to pessoa)))
+                }
+                call.respond(FreeMarkerContent("home.ftl", mapOf("articles" to articles)))
             }
 
             get("informacoes"){
@@ -99,12 +121,7 @@ fun Application.configureRouting() {
             }
 
 
-
-
-
         }
-
-
 
     }
 }

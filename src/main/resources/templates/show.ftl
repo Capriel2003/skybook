@@ -11,7 +11,7 @@
         </p>
         <hr>
         <p>
-            <a href="/articles/${article.id}/edit">Edit article</a>
+            <a href="/skybook/${article.id}/edit">Edit article</a>
         </p>
     </div>
 </@layout.header>

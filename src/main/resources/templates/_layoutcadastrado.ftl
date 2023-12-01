@@ -1,4 +1,6 @@
+<#-- @ftlvariable name="cadastros" type="kotlin.collections.List<com.example.models.Cadastro>" -->
 <#macro header>
+
     <!DOCTYPE html>
     <html lang="en">
 
@@ -29,11 +31,13 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
+
+
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <div class="topo">
                     <a href="/skybook/home">Home</a>
                     <a href="#">Promoções</a>
-                    <a href="/skybook/cadastros">Cadastro</a>
+                    <a>${pessoa.nome}</a>
                 </div>
             </div>
 
@@ -44,6 +48,6 @@
     <#nested>
     </body>
 
-
     </html>
+
 </#macro>

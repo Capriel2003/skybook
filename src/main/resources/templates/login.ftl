@@ -6,7 +6,7 @@
             <h2 class="top-log">Login</h2>
 
             <div class="barra-login">
-                <form action="/articles/login" method="post">
+                <form action="/skybook/login" method="post">
                     <label for="email">Email:</label>
                     <input type="text" id="email" name="email" required>
 

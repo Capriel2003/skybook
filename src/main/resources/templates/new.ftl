@@ -2,7 +2,7 @@
 <@layout.header>
     <div>
         <h3>Create article</h3>
-        <form action="/articles" method="post">
+        <form action="/skybook" method="post">
             <p>
                 <input type="text" name="title">
             </p>

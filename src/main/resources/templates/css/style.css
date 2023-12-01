@@ -4,6 +4,10 @@
     font-family: monospace;
 }
 
+.topo{
+    padding-left: 75%;
+}
+
 .topo a {
     color: #000;
     text-decoration: none;
