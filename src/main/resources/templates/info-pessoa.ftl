@@ -1,5 +1,4 @@
-<#-- @ftlvariable name="article" type="com.example.models.Article" -->
-<#import "_layout.ftl" as layout />
+<#import "_layoutcadastrado.ftl" as layout />
 <@layout.header>
 
 <div id="info-pessoa">
@@ -12,25 +11,25 @@
                 <h5>Insira aqui as infomaçõesde quem vai estar a bordo!</h5>
 
                 <hr />
-                <form>
+                <form >
                     <label for="fname">Nome completo</label>
                     <input
                             type="text"
                             class="text"
                             id="fname"
                             name="firstname"
-                            placeholder="Digite seu nome completo aqui."
+                            value="${pessoa.nome}"
                             required="required"
                     />
 
                     <label for="e-mail">E-mail</label>
                     <input
-                            type="text"
+                            type="email"
                             class="text"
                             pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
                             id="email"
                             name="emailCntt"
-                            placeholder="vamosvoarem312@decolando.com"
+                            value="${pessoa.email}"
                             title="Um indereço de E-mail válido é semelhante a vamosvoarem312@decolando.com"
                             required="required"
                     />
@@ -46,6 +45,8 @@
                             title="Número de telefone precisa ser no formato (99) 9999-9999"
                             required="required"
                     />
+                    <br>
+                    <input type="submit" value="Prosseguir">
                 </form>
             </div>
             <br />

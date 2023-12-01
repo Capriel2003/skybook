@@ -11,8 +11,8 @@ private constructor(val id: Int?, var nome: String?, var email: String?, var sen
     }
 }
 
-fun getCadastroByName(name: String): Cadastro? {
-    return cadastros.find { it.nome == name }
+fun getCadastroByEmail(email: String): Cadastro? {
+    return cadastros.find { it.email == email }
 }
 
 val cadastros = mutableListOf(Cadastro.newEntry(

@@ -5,7 +5,10 @@
 }
 
 .topo{
-    padding-left: 75%;
+    padding-left: 70%;
+}
+.dropdown{
+    margin-top: 3%;
 }
 
 .topo a {
@@ -46,4 +49,3 @@
     box-shadow: 0 0 15px rgba(0, 0, 0, 1);
     border-radius: 10px;
 }
-

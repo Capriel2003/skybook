@@ -31,18 +31,45 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-
-
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-                <div class="topo">
+            <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarTogglerDemo02">
+                <div class="topo d-flex">
                     <a href="/skybook/home">Home</a>
                     <a href="#">Promoções</a>
-                    <a>${pessoa.nome}</a>
+
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            ${pessoa.nome}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" id="logoutLink" href="#">Deslogar</a>
+                        </div>
+                    </div>
+                    <script>
+                        // Adiciona um evento de clique ao link de logout
+                        document.getElementById('logoutLink').addEventListener('click', function (event) {
+                            event.preventDefault(); // Impede o comportamento padrão do link
+
+                            // Faz uma requisição para o endpoint de deslogar
+                            fetch('/skybook/logout', { method: 'POST' })
+                                .then(response => {
+                                    if (response.ok) {
+                                        console.log('Usuário deslogado com sucesso.');
+                                        window.location.href = '/skybook/cadastros';
+                                    } else {
+                                        console.error('Erro ao deslogar o usuário.');
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Erro de rede:', error);
+                                });
+                        });
+                    </script>
                 </div>
             </div>
-
         </div>
     </nav>
+
 
 
     <#nested>

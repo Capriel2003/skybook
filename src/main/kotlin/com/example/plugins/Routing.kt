@@ -1,6 +1,7 @@
 package com.example.plugins
 
 import com.example.models.*
+import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.freemarker.*
 import io.ktor.server.http.content.*
@@ -22,15 +23,14 @@ fun Application.configureRouting() {
         route("skybook") {
             get {
                 val userDataCookie = call.request.cookies["userData"]
-                if (userDataCookie != null) {
-                    application.log.info("zz2zz")
-                    val dados = getCadastroByName(userDataCookie)
-                    application.log.info(userDataCookie)
-
-                    pessoa.nome = dados?.nome.toString()
-                    pessoa.email = dados?.email.toString()
-                    pessoa.senha = dados?.senha.toString()
-
+                if (userDataCookie != null && userDataCookie!="false") {
+                    val userInfo = userDataCookie.split(":")
+                    val nome = userInfo[0]
+                    val email = userInfo[1]
+                    val senha = userInfo[2]
+                    pessoa.nome = nome
+                    pessoa.email = email
+                    pessoa.senha = senha
                     call.respond(FreeMarkerContent("homecadastrado.ftl", mapOf("pessoa" to pessoa)))
                 }
                 call.respond(FreeMarkerContent("index.ftl", mapOf("articles" to articles)))
@@ -79,6 +79,23 @@ fun Application.configureRouting() {
             get("login"){
                 call.respond(FreeMarkerContent("login.ftl", model=null))
             }
+            get("loginErro"){
+                call.respond(FreeMarkerContent("loginErro.ftl", model=null))
+            }
+            post("login"){
+                val formParameters = call.receiveParameters()
+                val email = formParameters.getOrFail("email")
+                val senha = formParameters.getOrFail("senha")
+                val dados = getCadastroByEmail(email)
+                if (dados?.senha == senha){
+                    call.response.cookies.append("userData","${dados.nome}:${dados.email}:${dados.senha}")
+                    application.log.info("logado")
+                    call.respondRedirect("/skybook")
+                }
+                else{
+                    call.respondRedirect("/skybook/loginErro")
+                }
+            }
 
             get("lisCad"){
                 call.respond(FreeMarkerContent("mapacadasatro.ftl", mapOf("cadastros" to cadastros)))            }
@@ -94,10 +111,10 @@ fun Application.configureRouting() {
                 cadastros.add(novosDados)
                 application.log.info(novosDados.id.toString())
 
-                call.response.cookies.append("userData","${novosDados.nome}")
+                call.response.cookies.append("userData","${novosDados.nome}:${novosDados.email}:${novosDados.senha}")
                 application.log.info("cadastrado")
 
-                call.respondRedirect("/skybook/cadastros/${novosDados.id}")
+                call.respondRedirect("/skybook")
             }
             get("cadastros/{id}"){
                 val id = call.parameters.getOrFail<Int>("id").toInt()
@@ -105,19 +122,47 @@ fun Application.configureRouting() {
             }
             get("home"){
                 val userDataCookie = call.request.cookies["userData"]
-                application.log.info(userDataCookie)
-                if (userDataCookie != null) {
-                    val dados = getCadastroByName(userDataCookie)
-                    pessoa.nome = dados?.nome.toString()
-                    pessoa.email = dados?.email.toString()
-                    pessoa.senha = dados?.senha.toString()
+                if (userDataCookie == "false"){
+                    application.log.info(userDataCookie)
+                }
+                if (userDataCookie != null && userDataCookie != "false") {
+                    val userInfo = userDataCookie.split(":")
+                    pessoa.nome = userInfo[0]
+                    pessoa.email = userInfo[1]
+                    pessoa.senha = userInfo[2]
                     call.respond(FreeMarkerContent("homecadastrado.ftl", mapOf("pessoa" to pessoa)))
                 }
                 call.respond(FreeMarkerContent("home.ftl", mapOf("articles" to articles)))
             }
 
+            post("logout") {
+                call.response.cookies.append(
+                    name = "userData", // Novo nome do cookie
+                    value = "false"
+                )
+                call.respond(HttpStatusCode.OK, "Usuário deslogado com sucesso.")
+            }
+
+
             get("informacoes"){
-                call.respond(FreeMarkerContent("info-pessoa.ftl", model = null))
+                call.respond(FreeMarkerContent("info-pessoa.ftl", mapOf("pessoa" to pessoa)))
+
+            }
+            post("informacoes"){
+                val formParameters = call.receiveParameters()
+                val title = formParameters.getOrFail("title")
+                val body = formParameters.getOrFail("body")
+                val newEntry = Article.newEntry(title, body)
+                articles.add(newEntry)
+                call.respondRedirect("/skybook/${newEntry.id}")
+            }
+
+
+            get("pagamento"){
+                val userDataCookie = call.request.cookies["userData"]
+                val userInfo = userDataCookie?.split(":")
+                pessoa.nome = userInfo!![0]
+                call.respond(FreeMarkerContent("pagamento.ftl", mapOf("pessoa" to pessoa)))
             }
 
 
