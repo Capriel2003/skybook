@@ -88,7 +88,7 @@ fun Application.configureRouting() {
                 val dados = getCadastroByEmail(email)
                 if (dados?.senha == senha){
                     call.response.cookies.append("userData","${dados.nome}:${dados.email}:${dados.senha}")
-                    call.respondRedirect("/skybook")
+                    call.respondRedirect("/skybook/home")
                 }
                 else{
                     call.respondRedirect("/skybook/loginErro")
@@ -96,10 +96,12 @@ fun Application.configureRouting() {
             }
 
             get("lisCad"){
-                call.respond(FreeMarkerContent("mapacadasatro.ftl", mapOf("cadastros" to cadastros)))            }
+                call.respond(FreeMarkerContent("mapacadasatro.ftl", mapOf("cadastros" to cadastros)))}
+
             get("cadastros"){
                 call.respond(FreeMarkerContent("cadastro.ftl", model = null))
             }
+
             post("cadastros"){
                 val formParameters = call.receiveParameters()
                 val nome = formParameters.getOrFail("nome")
@@ -153,21 +155,14 @@ fun Application.configureRouting() {
                 if (preco != null) {
                     passagem.preco = preco
                 }
-                call.respond(FreeMarkerContent("info-pessoa.ftl", mapOf("passagem" to passagem,
-                    "pessoa" to pessoa
-                )))
-
-//                if (userDataCookie != null && userDataCookie!="false") {
-//                    call.respond(FreeMarkerContent("passagenscadastrada.ftl",
-//                        mapOf("voos" to listaVoos.filter { it.origem == solicitacao.origem && it.destino == solicitacao.destino},
-//                            "data" to solicitacao.data,
-//                            "passagem" to passagem
-//                        )))
-//                }
-//                call.respond(FreeMarkerContent("passagens.ftl",
-//                    mapOf("voos" to listaVoos.filter { it.origem == solicitacao.origem && it.destino == solicitacao.destino},
-//                        "data" to solicitacao.data
-//                    )))
+                val userDataCookie = call.request.cookies["userData"]
+                if (userDataCookie != null && userDataCookie!="false") {
+                    call.respond(FreeMarkerContent("info-pessoa.ftl",
+                        mapOf("passagem" to passagem,
+                            "pessoa" to pessoa
+                        )))
+                }
+                call.respond(FreeMarkerContent("cadastro.ftl", model = null))
             }
 
             get("pagamento"){
