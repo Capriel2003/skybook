@@ -165,6 +165,10 @@ fun Application.configureRouting() {
                         "data" to solicitacao.data
                     )))
             }
+            get("recibo") {
+                call.respond(FreeMarkerContent("print.html", mapOf("pessoa" to pessoa)))
+                application.log.info(pessoa.nome)
+            }
         }
     }
 }

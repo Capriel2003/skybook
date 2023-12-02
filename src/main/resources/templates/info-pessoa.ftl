@@ -25,7 +25,7 @@
 
                         <label for="e-mail">E-mail</label>
                         <input
-                                type="text"
+                                type="email"
                                 class="text"
                                 pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
                                 id="email"
