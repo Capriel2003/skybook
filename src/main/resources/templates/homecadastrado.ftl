@@ -79,13 +79,11 @@
                                 <option value="TO">Tocantins</option>
                             </select>
 
-
                             <div>Data</div>
                             <input type="date" name="date" id="data">
                             <button id="confirmar">Pesquisar</button>
                         </form>
                     </div>
-
                 </div>
 
             </div>
