@@ -22,7 +22,7 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <img src="https://cdn-icons-png.flaticon.com/512/7893/7893979.png" alt="aviao" class="imageLogo">
-            <a class="navbar-brand" href="/skybook">VOO - Passagens Aéreas</a>
+            <a class="navbar-brand" href="/skybook/home">VOO - Passagens Aéreas</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false"
                     aria-label="Toggle navigation">

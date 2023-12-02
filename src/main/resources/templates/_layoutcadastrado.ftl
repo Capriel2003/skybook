@@ -33,7 +33,7 @@
 
             <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarTogglerDemo02">
                 <div class="topo d-flex">
-                    <a href="/skybook/home">Home</a>
+                    <a href="/skybook">Home</a>
                     <a href="#">Promoções</a>
 
                     <div class="dropdown">

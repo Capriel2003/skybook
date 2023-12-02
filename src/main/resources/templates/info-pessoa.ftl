@@ -1,5 +1,4 @@
-<#-- @ftlvariable name="article" type="com.example.models.Article" -->
-<#import "_layout.ftl" as layout />
+<#import "_layoutcadastrado.ftl" as layout />
 <@layout.header>
 
     <div id="info-pessoa">
@@ -12,30 +11,31 @@
                     <h5>Insira aqui as infomaçõesde quem vai estar a bordo!</h5>
 
                     <hr />
-                    <form>
-                        <label for="fname">Nome completo</label>
+                    <form  action="/skybook/pagamento" method="post">
+                        <label>Nome completo</label>
                         <input
                                 type="text"
                                 class="text"
                                 id="fname"
-                                name="firstname"
-                                placeholder="Digite seu nome completo aqui."
+                                name="fname"
+                                value="${pessoa.nome}"
                                 required="required"
                         />
 
-                        <label for="e-mail">E-mail</label>
+                        <label>E-mail</label>
+
                         <input
                                 type="email"
                                 class="text"
                                 pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
                                 id="email"
-                                name="emailCntt"
-                                placeholder="vamosvoarem312@decolando.com"
+                                name="email"
+                                value="${pessoa.email}"
                                 title="Um indereço de E-mail válido é semelhante a vamosvoarem312@decolando.com"
                                 required="required"
                         />
 
-                        <label for="phone">Telefone </label>
+                        <label>Telefone </label>
                         <input
                                 type="text"
                                 class="text"
@@ -46,6 +46,8 @@
                                 title="Número de telefone precisa ser no formato (99) 9999-9999"
                                 required="required"
                         />
+                        <br>
+                        <input type="submit" value="Prosseguir">
                     </form>
                 </div>
                 <br />
@@ -75,7 +77,6 @@
                     />
                     <input type="submit" value="Submit">
                 </div>
-
             </div>
         </div>
     </div>

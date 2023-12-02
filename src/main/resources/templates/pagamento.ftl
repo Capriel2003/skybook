@@ -82,9 +82,9 @@
             <select id="parcelamento" name="parcelamento" class="pagamento-input">
                 <option value="1">1x sem juros</option>
                 <option value="2">2x sem juros</option>
-                <option value="3">3x sem juros</option>
                 <option value="4">4x sem juros</option>
-                <option value="5">5x sem juros</option>
+                <option value="6">6x sem juros</option>
+                <option value="12">12x sem juros</option>
             </select>
             <input type="submit" value="Comprar" class="pagamento-btn" id="comprarBtn" disabled>
         </form>
