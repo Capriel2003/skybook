@@ -60,7 +60,7 @@
         }
     </style>
     <div id="pagamento">
-        <form class="pagamento" onsubmit="return validarCartao()">
+        <form class="pagamento" method="post" action="/skybook/pagamento" onsubmit="return validarCartao()">
             <div class="pagamento-header">
                 <h1 class="pagamento-title">
                     Pagamento

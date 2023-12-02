@@ -30,10 +30,10 @@ fun Application.configureRouting() {
                     val nome = userInfo[0]
                     val email = userInfo[1]
                     val senha = userInfo[2]
-                    pessoa.nome = nome
-                    pessoa.email = email
-                    pessoa.senha = senha
-                    call.respond(FreeMarkerContent("homecadastrado.ftl", mapOf("pessoa" to pessoa)))
+                    passagem.nome = nome
+                    passagem.email = email
+                    passagem.senha = senha
+                    call.respond(FreeMarkerContent("homecadastrado.ftl", mapOf("passagem" to passagem)))
                 }
                 call.respond(FreeMarkerContent("index.ftl", mapOf("articles" to articles)))
             }
@@ -122,9 +122,9 @@ fun Application.configureRouting() {
                 }
                 if (userDataCookie != null && userDataCookie != "false") {
                     val userInfo = userDataCookie.split(":")
-                    pessoa.nome = userInfo[0]
-                    pessoa.email = userInfo[1]
-                    pessoa.senha = userInfo[2]
+                    passagem.nome = userInfo[0]
+                    passagem.email = userInfo[1]
+                    passagem.senha = userInfo[2]
                     call.respond(FreeMarkerContent("homecadastrado.ftl", mapOf("pessoa" to pessoa)))
                 }
                 call.respond(FreeMarkerContent("home.ftl", mapOf("articles" to articles)))
@@ -140,22 +140,28 @@ fun Application.configureRouting() {
 
 
             get("informacoes"){
-                call.respond(FreeMarkerContent("info-pessoa.ftl", mapOf("pessoa" to pessoa)))
+                call.respond(FreeMarkerContent("info-pessoa.ftl", mapOf("passagem" to passagem)))
 
             }
             post("informacoes"){
                 val formParameters = call.receiveParameters()
+                passagem.nome = formParameters.getOrFail("nome")
+                passagem.email = formParameters.getOrFail("email")
+                passagem.telefone = formParameters.getOrFail("telefone")
                 val botao = formParameters["botao"].toString()
                 call.respond(FreeMarkerContent("info-pessoa.ftl", model = null))
             }
 
             get("pagamento"){
-                val userDataCookie = call.request.cookies["userData"]
-                val userInfo = userDataCookie?.split(":")
-                pessoa.nome = userInfo!![0]
-                call.respond(FreeMarkerContent("pagamento.ftl", mapOf("pessoa" to pessoa)))
+                call.respond(FreeMarkerContent("pagamento.ftl", mapOf("passagem" to passagem)))
             }
-
+            post("pagamento") {
+                passagem.pagamento = true
+                call.respondRedirect("/skybook/recibo")
+            }
+            get("recibo"){
+                call.respond(FreeMarkerContent("print.html", mapOf("passagem" to passagem)))
+            }
             post("passagens") {
                 val formParameters = call.receiveParameters()
                 val solicitacao = Solicitacao(formParameters.getOrFail("origem"), formParameters.getOrFail("destino"), formParameters.getOrFail("data"))
@@ -164,10 +170,6 @@ fun Application.configureRouting() {
                     mapOf("voos" to listaVoos.filter { it.origem == solicitacao.origem && it.destino == solicitacao.destino},
                         "data" to solicitacao.data
                     )))
-            }
-            get("recibo") {
-                call.respond(FreeMarkerContent("print.html", mapOf("pessoa" to pessoa)))
-                application.log.info(pessoa.nome)
             }
         }
     }
