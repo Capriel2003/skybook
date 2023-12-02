@@ -1,7 +1,6 @@
 package com.example.plugins
 
 import com.example.models.*
-import com.example.models.Passagem
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.freemarker.*
@@ -11,7 +10,6 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.util.*
 
-var passagem = Passagem("", "", "", "", "", "", "", 0.0, 0, false)
 
 fun Application.configureRouting() {
     routing {
@@ -30,10 +28,10 @@ fun Application.configureRouting() {
                     val nome = userInfo[0]
                     val email = userInfo[1]
                     val senha = userInfo[2]
-                    pessoa.nome = nome
-                    pessoa.email = email
-                    pessoa.senha = senha
-                    call.respond(FreeMarkerContent("homecadastrado.ftl", mapOf("pessoa" to pessoa)))
+                    passagem.nome = nome
+                    passagem.email = email
+                    passagem.senha = senha
+                    call.respond(FreeMarkerContent("homecadastrado.ftl", mapOf("passagem" to passagem)))
                 }
                 call.respond(FreeMarkerContent("index.ftl", mapOf("articles" to articles)))
             }
@@ -75,6 +73,9 @@ fun Application.configureRouting() {
                 }
             }
 
+
+
+
             get("login"){
                 call.respond(FreeMarkerContent("login.ftl", model=null))
             }
@@ -88,6 +89,7 @@ fun Application.configureRouting() {
                 val dados = getCadastroByEmail(email)
                 if (dados?.senha == senha){
                     call.response.cookies.append("userData","${dados.nome}:${dados.email}:${dados.senha}")
+                    application.log.info("logado")
                     call.respondRedirect("/skybook")
                 }
                 else{
@@ -107,8 +109,10 @@ fun Application.configureRouting() {
                 val senha = formParameters.getOrFail("senha")
                 val novosDados = Cadastro.newEntry(nome, email, senha)
                 cadastros.add(novosDados)
+                application.log.info(novosDados.id.toString())
 
                 call.response.cookies.append("userData","${novosDados.nome}:${novosDados.email}:${novosDados.senha}")
+                application.log.info("cadastrado")
 
                 call.respondRedirect("/skybook")
             }
@@ -119,13 +123,14 @@ fun Application.configureRouting() {
             get("home"){
                 val userDataCookie = call.request.cookies["userData"]
                 if (userDataCookie == "false"){
+                    application.log.info(userDataCookie)
                 }
                 if (userDataCookie != null && userDataCookie != "false") {
                     val userInfo = userDataCookie.split(":")
-                    pessoa.nome = userInfo[0]
-                    pessoa.email = userInfo[1]
-                    pessoa.senha = userInfo[2]
-                    call.respond(FreeMarkerContent("homecadastrado.ftl", mapOf("pessoa" to pessoa)))
+                    passagem.nome = userInfo[0]
+                    passagem.email = userInfo[1]
+                    passagem.senha = userInfo[2]
+                    call.respond(FreeMarkerContent("homecadastrado.ftl", mapOf("passagem" to passagem)))
                 }
                 call.respond(FreeMarkerContent("home.ftl", mapOf("articles" to articles)))
             }
@@ -140,35 +145,34 @@ fun Application.configureRouting() {
 
 
             get("informacoes"){
-                call.respond(FreeMarkerContent("info-pessoa.ftl", mapOf("pessoa" to pessoa)))
+                application.log.info(passagem.email)
+                call.respond(FreeMarkerContent("info-pessoa.ftl", mapOf("passagem" to passagem)))
 
             }
             post("informacoes"){
                 val formParameters = call.receiveParameters()
-                val botao = formParameters["botao"].toString()
-                call.respond(FreeMarkerContent("info-pessoa.ftl", model = null))
+                passagem.nome = formParameters.getOrFail("nome")
+                passagem.email = formParameters.getOrFail("email")
+                passagem.telefone = formParameters.getOrFail("telefone")
+
+                call.respondRedirect("/skybook/pagamento")
             }
+
 
             get("pagamento"){
-                val userDataCookie = call.request.cookies["userData"]
-                val userInfo = userDataCookie?.split(":")
-                pessoa.nome = userInfo!![0]
-                call.respond(FreeMarkerContent("pagamento.ftl", mapOf("pessoa" to pessoa)))
+                call.respond(FreeMarkerContent("pagamento.ftl", mapOf("passagem" to passagem)))
+            }
+            post("pagamento") {
+                passagem.pagamento = true
+                call.respondRedirect("/skybook/recibo")
             }
 
-            post("passagens") {
-                val formParameters = call.receiveParameters()
-                val solicitacao = Solicitacao(formParameters.getOrFail("origem"), formParameters.getOrFail("destino"), formParameters.getOrFail("data"))
-                passagem.data = solicitacao.data
-                call.respond(FreeMarkerContent("passagens.ftl",
-                    mapOf("voos" to listaVoos.filter { it.origem == solicitacao.origem && it.destino == solicitacao.destino},
-                        "data" to solicitacao.data
-                    )))
+            get("recibo"){
+                call.respond(FreeMarkerContent("print.html", mapOf("passagem" to passagem)))
             }
-            get("recibo") {
-                call.respond(FreeMarkerContent("print.html", mapOf("pessoa" to pessoa)))
-                application.log.info(pessoa.nome)
-            }
+
+
         }
+
     }
 }

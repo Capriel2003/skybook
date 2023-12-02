@@ -11,10 +11,11 @@
                     <div class="barra-pesquisa">
                         <h2>Reserva de Voos</h2>
 
-                        <form action="/skybook/passagens" method="post">
+                        <form>
                             <span>Origem</span>
                             <select onchange="validaPais(true)" id="origem" name="origem">
                                 <option value="none" selected disabled hidden>Selecione uma opção</option>
+
                                 <option value="AC">Acre</option>
                                 <option value="AL">Alagoas</option>
                                 <option value="AM">Amazonas</option>
@@ -47,6 +48,7 @@
                             <span>Destino</span>
                             <select onchange="validaPais(false)" id="destino" name="destino">
                                 <option value="none" selected disabled hidden>Selecione uma opção</option>
+
                                 <option value="AC">Acre</option>
                                 <option value="AL">Alagoas</option>
                                 <option value="AM">Amazonas</option>
@@ -78,17 +80,7 @@
 
 
                             <div>Data</div>
-                            <input type="date" name="data" id="data" min = "">
-
-                            <script>
-                                date = new Date();
-                                ano = date.getFullYear();
-                                mes = date.getMonth() + 1;
-                                dia = date.getDate();
-                                data_hoje = ano + "-" + mes + "-" + dia;
-                                console.log(data_hoje)
-                                document.getElementById("data").min = data_hoje;
-                            </script>
+                            <input type="date" name="date" id="data">
                             <button id="confirmar">Pesquisar</button>
                         </form>
                     </div>
