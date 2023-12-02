@@ -21,7 +21,7 @@
             </div>
 
             <div class="bot-log">
-                <a href="/skybook/login">Ja possui uma conta? Login</a>
+                <a href="/skybook/login" >Ja possui uma conta? Login</a>
             </div>
 
         </div>

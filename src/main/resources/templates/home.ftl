@@ -11,11 +11,10 @@
                     <div class="barra-pesquisa">
                         <h2>Reserva de Voos</h2>
 
-                        <form>
+                        <form action="/skybook/passagens" method="post">
                             <span>Origem</span>
-                            <select onchange="validaPais(true)" id="origem" name="origem">
-                                <option value="none" selected disabled hidden>Selecione uma opção</option>
-
+                            <select onchange="validaPais(true)" id="origem" name="origem" required>
+                                <option value="none"></option>
                                 <option value="AC">Acre</option>
                                 <option value="AL">Alagoas</option>
                                 <option value="AM">Amazonas</option>
@@ -46,9 +45,8 @@
                             </select>
 
                             <span>Destino</span>
-                            <select onchange="validaPais(false)" id="destino" name="destino">
-                                <option value="none" selected disabled hidden>Selecione uma opção</option>
-
+                            <select onchange="validaPais(false)" id="destino" name="destino" required>
+                                <option value="none"></option>
                                 <option value="AC">Acre</option>
                                 <option value="AL">Alagoas</option>
                                 <option value="AM">Amazonas</option>
@@ -80,7 +78,17 @@
 
 
                             <div>Data</div>
-                            <input type="date" name="date" id="data">
+                            <input type="date" name="data" id="data" min = "" required>
+
+                            <script>
+                                date = new Date();
+                                ano = date.getFullYear();
+                                mes = date.getMonth() + 1;
+                                dia = date.getDate();
+                                data_hoje = ano + "-" + mes + "-" + dia;
+                                console.log(data_hoje)
+                                document.getElementById("data").min = data_hoje;
+                            </script>
                             <button id="confirmar">Pesquisar</button>
                         </form>
                     </div>
