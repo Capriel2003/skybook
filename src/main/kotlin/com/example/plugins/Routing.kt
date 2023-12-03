@@ -177,6 +177,7 @@ fun Application.configureRouting() {
 
             }
 
+
             get("pagamento"){
                 call.respond(FreeMarkerContent("pagamento.ftl", mapOf("passagem" to passagem)))
             }
@@ -219,6 +220,9 @@ fun Application.configureRouting() {
                     mapOf("voos" to listaVoos.filter { it.origem == solicitacao.origem && it.destino == solicitacao.destino},
                         "data" to solicitacao.data
                     )))
+            }
+            get("promocao") {
+                call.respond(FreeMarkerContent("promocao.ftl", mapOf("passagem" to passagem)))
             }
         }
     }

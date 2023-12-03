@@ -1,6 +1,31 @@
 <#-- @ftlvariable name="article" type="com.example.models.Article" -->
 <#import "_layout.ftl" as layout />
 <@layout.header>
+<style>
+
+    input[type="date"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 200px;
+    outline: none;
+    }
+
+    input[type="date"]:focus {
+    border-color: #66afe9;
+    box-shadow: 0 0 5px rgba(102, 175, 233, 1);
+    }
+
+    input[type="date"]:hover {
+    cursor: pointer;
+    }
+
+    input[type="date"]::before {
+    content: "📅";
+    margin-right: 5px;
+    }
+    </style>
     <div>
         <div class="content">
 
@@ -14,7 +39,7 @@
                         <form action="/skybook/passagens" method="post">
                             <span>Origem</span>
                             <select onchange="validaPais(true)" id="origem" name="origem" required>
-                                <option value="none"></option>
+                                <option value="none">Selecione a Origem</option>
                                 <option value="AC">Acre</option>
                                 <option value="AL">Alagoas</option>
                                 <option value="AM">Amazonas</option>
@@ -46,7 +71,7 @@
 
                             <span>Destino</span>
                             <select onchange="validaPais(false)" id="destino" name="destino" required>
-                                <option value="none"></option>
+                                <option value="none">Selecione o Destino</option>
                                 <option value="AC">Acre</option>
                                 <option value="AL">Alagoas</option>
                                 <option value="AM">Amazonas</option>
