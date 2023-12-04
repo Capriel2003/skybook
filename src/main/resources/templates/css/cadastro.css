@@ -74,7 +74,6 @@ button:hover {
 
 #info-pessoa {
     height: 91vh;
-    background-color: #f2f2f2;
     border-radius: 5px;
     padding: 20px;
 }
@@ -115,9 +114,7 @@ input[type="submit"]:hover {
     background-color: #45a049;
 }
 
-.box{
-    border: 1px solid rgba(0, 0, 0, 0.144);
-}
+
 
 .columnTXT {
     float: left;

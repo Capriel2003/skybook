@@ -30,11 +30,11 @@
             color: inherit; /* Herda a cor do texto do pai (evita cores padrão do link) */
         }
 
-        /*.card img {*/
-        /*    width: 100%;*/
-        /*    height: auto;*/
-        /*    border-bottom: 1px solid #ddd;*/
-        /*}*/
+        .card img {
+            width: 100%;
+            height: 250px;
+            border-bottom: 1px solid #ddd;
+        }
 
         .card-content {
             padding: 15px;
@@ -76,15 +76,16 @@
         }
     </style>
 
-        <form id="promo">
+    <form>
+        <div id="promo">
             <div class="card">
 
-                <a href="/skybook/passagens" name="card1">
+                <a name="card1">
                     <img src="/static/Imagens/${voos[promocoes[0]].destino}.jpg" alt="Imagem1" class = "img">
                     <div class="card-content">
                         <h2>${voos[promocoes[0]].destino}</h2>
                         <p>Origem: ${voos[promocoes[0]].origem}</p>
-                        <p>Comapina aéria : ${voos[promocoes[0]].compania}</p>
+                        <p>Companhia Aérea : ${voos[promocoes[0]].compania}</p>
                         <p>Preco: R$${voos[promocoes[0]].preco},00</p>
                         <form action="/skybook/assentos" method="post">
                             <button name="botao" value="${voos[promocoes[0]].index}">Comprar</button>
@@ -96,12 +97,12 @@
 
             <div class="card">
 
-                <a href="#" name="card2">
+                <a name="card2">
                     <img src="/static/Imagens/${voos[promocoes[1]].destino}.jpg" alt="Imagem 2" class = "img">
                     <div class="card-content">
                         <h2>${voos[promocoes[1]].destino}</h2>
                         <p>Origem: ${voos[promocoes[1]].origem}</p>
-                        <p>Comapina aéria : ${voos[promocoes[1]].compania}</p>
+                        <p>Companhia Aérea : ${voos[promocoes[1]].compania}</p>
                         <p>Preco: R$${voos[promocoes[1]].preco},00</p>
                         <form action="/skybook/assentos" method="post">
                             <button name="botao" value="${voos[promocoes[1]].index}">Comprar</button>
@@ -113,12 +114,12 @@
 
             <div class="card">
 
-                <a href="#" name="card3">
+                <a name="card3">
                     <img src="/static/Imagens/${voos[promocoes[2]].destino}.jpg" alt="Imagem 3" class = "img">
                     <div class="card-content">
                         <h2>${voos[promocoes[2]].destino}</h2>
                         <p>Origem: ${voos[promocoes[2]].origem}</p>
-                        <p>Comapina aéria : ${voos[promocoes[2]].compania}</p>
+                        <p>Companhia Aérea : ${voos[promocoes[2]].compania}</p>
                         <p>Preco: R$${voos[promocoes[2]].preco},00</p>
                         <form action="/skybook/assentos" method="post">
                             <button name="botao" value="${voos[promocoes[2]].index}">Comprar</button>
@@ -130,12 +131,12 @@
 
             <div class="card">
 
-                <a href="#" name="card4">
+                <a  name="card4">
                     <img src="/static/Imagens/${voos[promocoes[3]].destino}.jpg" alt="Imagem 1" class = "img">
                     <div class="card-content">
                         <h2>${voos[promocoes[3]].destino}</h2>
                         <p>Origem: ${voos[promocoes[3]].origem}</p>
-                        <p>Comapina aéria : ${voos[promocoes[3]].compania}</p>
+                        <p>Companhia Aérea : ${voos[promocoes[3]].compania}</p>
                         <p>Preco: R$${voos[promocoes[3]].preco},00</p>
                         <form action="/skybook/assentos" method="post">
                             <button name="botao" value="${voos[promocoes[3]].index}">Comprar</button>
@@ -147,12 +148,12 @@
 
             <div class="card">
 
-                <a href="/skybook/passagens" name="card5">
+                <a name="card5">
                     <img src="/static/Imagens/${voos[promocoes[4]].destino}.jpg" alt="Imagem 2" class = "img">
                     <div class="card-content">
                         <h2>${voos[promocoes[4]].destino}</h2>
                         <p>Origem: ${voos[promocoes[4]].origem}</p>
-                        <p>Comapina aéria : ${voos[promocoes[4]].compania}</p>
+                        <p>Companhia Aérea : ${voos[promocoes[4]].compania}</p>
                         <p>Preco: R$${voos[promocoes[4]].preco},00</p>
                         <form action="/skybook/assentos" method="post">
                             <button name="botao" value="${voos[promocoes[4]].index}">Comprar</button>
@@ -164,12 +165,12 @@
 
             <div class="card" name="card6">
 
-                <a href="#">
+                <a name="card6">
                     <img src="/static/Imagens/${voos[promocoes[5]].destino}.jpg" alt="Imagem 3" class = "img">
                     <div class="card-content">
                         <h2>${voos[promocoes[5]].destino}</h2>
                         <p>Origem: ${voos[promocoes[5]].origem}</p>
-                        <p>Comapina aéria : ${voos[promocoes[5]].compania}</p>
+                        <p>Companhia Aérea : ${voos[promocoes[5]].compania}</p>
                         <p>Preco: R$${voos[promocoes[5]].preco},00</p>
                         <form action="/skybook/assentos" method="post">
                             <button name="botao" value="${voos[promocoes[5]].index}">Comprar</button>
@@ -178,6 +179,7 @@
                 </a>
 
             </div>
-        </form>
+        </div>
+    </form>
 
 </@layout.header>

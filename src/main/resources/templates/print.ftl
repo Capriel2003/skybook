@@ -8,7 +8,6 @@
       justify-content: center;
       height: 91vh;
       margin: 0;
-      background-color: #f4f4f4;
     }
 
     .container {

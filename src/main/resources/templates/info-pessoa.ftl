@@ -2,11 +2,11 @@
 <@layout.header>
 
     <div id="info-pessoa">
-        <h3>Vamos agora reservar sua passagem!!</h3>
+        <h3 style="color: #ffffff"><b>Vamos agora reservar sua passagem!!</b></h3>
 
         <div class="row" style="padding-top: 10px">
-            <div class="columnTXT">
-                <div class="box">
+            <div class="columnTXT" style="background-color: #f2f2f2; border-radius: 10px;">
+                <div class="box" >
                     <h3>Informações do passageiro</h3>
                     <h5>Insira aqui as infomaçõesde quem vai estar a bordo!</h5>
 
@@ -53,8 +53,8 @@
             </div>
 
 
-            <div class="columnRevisao" style="padding-top: 20px">
-                <div class="box">
+            <div class="columnRevisao" style="padding-top: 35px; margin-top: 50px;background-color: #f2f2f2; border-radius: 10px;">
+                <div class="box" >
                     <h3>Resumo da viagem</h3>
                     <hr>
                     <h5> Horário Saída --------------  Destino  </h5>
@@ -62,7 +62,9 @@
                     <h5>Em <b> ${passagem.data} </b> </h5>
                 </div>
                 <br>
-                <div class="box">
+                <hr>
+
+                <div class="box" >
                     <h3>Resumo do pedido</h3>
                     <hr>
                     <h5> Assento ${passagem.assento} -------------- <b>R$ ${passagem.preco} </b> </h5>
