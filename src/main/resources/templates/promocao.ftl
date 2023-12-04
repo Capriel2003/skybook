@@ -45,7 +45,7 @@
         }
 
         p {
-            font-si    ze: 14px;
+            font-ze: 14px;
             color: #666;
         }
 

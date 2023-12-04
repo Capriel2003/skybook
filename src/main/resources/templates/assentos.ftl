@@ -2,89 +2,177 @@
 <#import "_layout.ftl" as layout />
 <@layout.header>
     <style>
-        #assento{
+        #body {
             margin: 0;
-            width: 100%;
-            height: 100%;
+            padding: 0;
             display: flex;
-            justify-content: center;
             align-items: center;
-        }
-
-        main{
-            height: 30%;
-            max-width: 80%;
-            background-color: rgb(188, 188, 255);
-            display: flex;
-            flex-direction: column;
-            overflow-x: auto;
-        }
-
-        .par{
-            height: 50%;
-            display: flex;
-        }
-        .impar{
-            height: 50%;
-            display: flex;
-        }
-
-        .assento{
-            display: flex;
             justify-content: center;
-            align-items: center;
-            aspect-ratio: 1/1;
-            background-color: rgb(188, 188, 255);
-
+            background-color: #ecf0f1;
+            min-height: 91vh;
         }
 
-        .disponivel{
-            color: antiquewhite;
-            font-weight: bolder;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: rgb(0, 102, 255);
-            border: 1px solid black;
-            width: 50%;
-            height: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 82vh;
+        }
+
+        .airplane-layout,
+        .airplane-layout2 {
+            display: grid;
+            grid-template-columns: repeat(10, 50px);
+            grid-template-rows: repeat(2, 50px) repeat(2, 20px);
+            grid-gap: 5px;
+            margin-bottom: 20px;
+            margin: 0 auto; /* Centraliza horizontalmente */
+        }
+
+        .seat {
+            width: 50px;
+            height: 50px;
+            background-color: #bdc3c7;
+            border: 1px solid #34495e;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
+            user-select: none; /* Evita seleção de texto ao clicar */
+            transition: background-color 0.3s ease;
+        }
+
+        .seat.selected {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        .center-text {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .reservation-button {
+            display: block;
+            margin: 0 auto;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .reservation-button:hover {
+            background-color: #2980b9;
         }
     </style>
-    <div id="assento">
-        <main>
-            <div class="impar"></div>
-            <div class="par"></div>
-        </main>
+
+<div id="body">
+    <div class="container">
+        <div class="center-text">
+            Seleção de Assentos
+        </div>
+
+        <div class="airplane-layout">
+            <!-- Assentos serão adicionados dinamicamente aqui -->
+        </div>
+
+        <div class="airplane-layout2">
+            <!-- Assentos serão adicionados dinamicamente aqui -->
+        </div>
+
+        <button class="reservation-button" onclick="reservarAssentos()">Reservar Assentos</button>
     </div>
-    <script>
-        const main = document.querySelector("main");
-        const linhas = [document.querySelector(".par"), document.querySelector(".impar")];
+
+</div>
 
 
 
-        function funcao(elements){
-            elements.forEach(element => {
-                let { id_assento, id_aviao } = element;
-                let assento = document.createElement("div");
-                let numb = document.createElement("div");
-                assento.className = "assento";
-                numb.className = "disponivel";
-                numb.innerText = id_assento;
-                numb.id = `V${id_assento}`;
-                assento.appendChild(numb);
-                linhas[id_assento%2].appendChild(assento);
-            });
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const airplaneLayout1 = document.querySelector(".airplane-layout");
+
+        // Número de linhas e colunas no layout do avião
+        const rows = 2;
+        const cols = 10;
+        var cont = 1;
+
+        // Adiciona assentos dinamicamente ao layout
+        for (let row = 1; row <= rows; row++) {
+            for (let col = 1; col <= cols; col++) {
+                const seat = document.createElement("div");
+                seat.classList.add("seat");
+                seat.dataset.row = row;
+                seat.dataset.col = col;
+                seat.textContent = cont.toString();
+                cont++;
+                seat.addEventListener("click", toggleSeatSelection);
+                airplaneLayout1.appendChild(seat);
+            }
         }
+    });
 
-        function funcao2(elements){
-            elements.forEach(element => {
-                let { id_assento, id_aviao } = element;
-                document.querySelector(`#V${id_assento}`).style.background = "red";
-            });
+    document.addEventListener("DOMContentLoaded", function () {
+        const airplaneLayout2 = document.querySelector(".airplane-layout2");
+
+        // Número de linhas e colunas no layout do avião
+        const rows = 2;
+        const cols = 10;
+        var cont = 21;
+
+        // Adiciona assentos dinamicamente ao layout
+        for (let row = 1; row <= rows; row++) {
+            for (let col = 1; col <= cols; col++) {
+                const seat = document.createElement("div");
+                seat.classList.add("seat");
+                seat.dataset.row = row;
+                seat.dataset.col = col;
+                seat.textContent = cont.toString();
+                cont++;
+                seat.addEventListener("click", toggleSeatSelection);
+                airplaneLayout2.appendChild(seat);
+            }
         }
+    });
 
-    </script>
+    function toggleSeatSelection() {
+        // Desmarca todos os assentos selecionados
+        const selectedSeats = document.querySelectorAll('.seat.selected');
+        selectedSeats.forEach(selectedSeat => selectedSeat.classList.remove('selected'));
+
+        // Marca apenas o assento clicado
+        this.classList.add("selected");
+
+        // Obtém as informações do assento
+        const row = this.dataset.row;
+        const col = this.dataset.col;
+        const seatNumber = this.textContent;
+
+        // Exibe um alerta com as informações do assento
+        //alert(
+        //    `Você clicou no assento `
+        //);
+    }
+
+    function reservarAssentos() {
+        const assentosSelecionados =
+            document.querySelectorAll(".seat.selected");
+
+        if (assentosSelecionados.length > 0) {
+            const assentosReservados = Array.from(assentosSelecionados).map(
+                (seat) => seat.textContent
+            );
+            //alert(`Assentos reservados: `);
+        } else {
+            //alert("Selecione pelo menos um assento antes de reservar.");
+        }
+    }
+</script>
 
 
 </@layout.header>

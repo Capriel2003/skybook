@@ -145,9 +145,7 @@ fun Application.configureRouting() {
                         "pessoa" to pessoa
                     )))
                 }
-                call.respond(FreeMarkerContent("info-pessoa.ftl", mapOf("passagem" to passagem,
-                    "pessoa" to pessoa
-                )))
+                call.respondRedirect("skybook/cadastros")
             }
             post("informacoes"){
 
@@ -162,19 +160,10 @@ fun Application.configureRouting() {
                         passagem.preco = preco
                     }
                     call.respondRedirect("/skybook/informacoes")
+            }
 
-//                if (userDataCookie != null && userDataCookie!="false") {
-//                    call.respond(FreeMarkerContent("passagenscadastrada.ftl",
-//                        mapOf("voos" to listaVoos.filter { it.origem == solicitacao.origem && it.destino == solicitacao.destino},
-//                            "data" to solicitacao.data,
-//                            "passagem" to passagem
-//                        )))
-//                }
-//                call.respond(FreeMarkerContent("passagens.ftl",
-//                    mapOf("voos" to listaVoos.filter { it.origem == solicitacao.origem && it.destino == solicitacao.destino},
-//                        "data" to solicitacao.data
-//                    )))
-
+            get("assento"){
+                call.respond(FreeMarkerContent("assentos.ftl", mapOf("passagem" to passagem)))
             }
 
 
