@@ -1,6 +1,7 @@
 package com.example.plugins
 
 import com.example.models.*
+import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.freemarker.*
 import io.ktor.server.http.content.*
@@ -9,18 +10,33 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.util.*
 
+val range = listaVoos.size
+val promocoes: List<Int> = listOf((0..range).random(), (0..range).random(), (0..range).random(), (0..range).random(), (0..range).random(), (0..range).random())
+var passagem = Passagem("", "", "", "", "Acre", "", "", "",0.0, 0, false)
+
 fun Application.configureRouting() {
     routing {
         static("/static") {
-            resources("files")
+            resources("templates")
         }
         get("/") {
-            call.respondRedirect("articles")
+            call.respondRedirect("skybook")
         }
 
-        route("articles") {
+        route("skybook") {
             get {
-                call.respond(FreeMarkerContent("index.ftl", mapOf("articles" to articles)))
+                val userDataCookie = call.request.cookies["userData"]
+                if (userDataCookie != null && userDataCookie!="false") {
+                    val userInfo = userDataCookie.split(":")
+                    val nome = userInfo[0]
+                    val email = userInfo[1]
+                    val senha = userInfo[2]
+                    passagem.nome = nome
+                    passagem.email = email
+                    pessoa.senha = senha
+                    call.respond(FreeMarkerContent("homecadastrado.ftl", mapOf("passagem" to passagem)))
+                }
+                call.respond(FreeMarkerContent("home.ftl", model = null))
             }
             get("new") {
                 call.respond(FreeMarkerContent("new.ftl", model = null))
@@ -31,7 +47,7 @@ fun Application.configureRouting() {
                 val body = formParameters.getOrFail("body")
                 val newEntry = Article.newEntry(title, body)
                 articles.add(newEntry)
-                call.respondRedirect("/articles/${newEntry.id}")
+                call.respondRedirect("/skybook/${newEntry.id}")
             }
             get("{id}") {
                 val id = call.parameters.getOrFail<Int>("id").toInt()
@@ -51,12 +67,190 @@ fun Application.configureRouting() {
                         val body = formParameters.getOrFail("body")
                         articles[index].title = title
                         articles[index].body = body
-                        call.respondRedirect("/articles/$id")
+                        call.respondRedirect("/skybook/$id")
                     }
                     "delete" -> {
                         articles.removeIf { it.id == id }
-                        call.respondRedirect("/articles")
+                        call.respondRedirect("/skybook")
                     }
+                }
+            }
+
+            get("login"){
+                call.respond(FreeMarkerContent("login.ftl", model=null))
+            }
+            get("loginErro"){
+                call.respond(FreeMarkerContent("loginErro.ftl", model=null))
+            }
+            post("login"){
+                val formParameters = call.receiveParameters()
+                val email = formParameters.getOrFail("email")
+                val senha = formParameters.getOrFail("senha")
+                val dados = getCadastroByEmail(email)
+                if (dados?.senha == senha){
+                    call.response.cookies.append("userData","${dados.nome}:${dados.email}:${dados.senha}")
+                    call.respondRedirect("/skybook")
+                }
+                else{
+                    call.respondRedirect("/skybook/loginErro")
+                }
+            }
+
+            get("lisCad"){
+                call.respond(FreeMarkerContent("mapacadasatro.ftl", mapOf("cadastros" to cadastros)))            }
+            get("cadastros"){
+                call.respond(FreeMarkerContent("cadastro.ftl", model = null))
+            }
+            post("cadastros"){
+                val formParameters = call.receiveParameters()
+                val nome = formParameters.getOrFail("nome")
+                val email = formParameters.getOrFail("email")
+                val senha = formParameters.getOrFail("senha")
+                val novosDados = Cadastro.newEntry(nome, email, senha)
+                cadastros.add(novosDados)
+
+                call.response.cookies.append("userData","${novosDados.nome}:${novosDados.email}:${novosDados.senha}")
+
+                call.respondRedirect("/skybook")
+            }
+            get("cadastros/{id}"){
+                val id = call.parameters.getOrFail<Int>("id").toInt()
+                call.respond(FreeMarkerContent("listacadastro.ftl", mapOf("cadastros" to cadastros)))
+            }
+            get("home"){
+                val userDataCookie = call.request.cookies["userData"]
+                if (userDataCookie == "false"){
+                }
+                if (userDataCookie != null && userDataCookie != "false") {
+                    val userInfo = userDataCookie.split(":")
+                    passagem.nome = userInfo[0]
+                    passagem.email = userInfo[1]
+                    pessoa.senha = userInfo[2]
+                    call.respond(FreeMarkerContent("homecadastrado.ftl", mapOf("pessoa" to pessoa)))
+                }
+                call.respond(FreeMarkerContent("home.ftl", mapOf("articles" to articles)))
+            }
+
+            post("logout") {
+                call.response.cookies.append(
+                    name = "userData", // Novo nome do cookie
+                    value = "false"
+                )
+                call.respond(HttpStatusCode.OK, "Usuário deslogado com sucesso.")
+            }
+
+
+            get("informacoes"){
+                val userDataCookie = call.request.cookies["userData"]
+                if (userDataCookie != null && userDataCookie!="false") {
+                    call.respond(FreeMarkerContent("info-pessoa.ftl", mapOf("passagem" to passagem,
+                        "pessoa" to pessoa
+                    )))
+                }
+                call.respondRedirect("/skybook/cadastros")
+            }
+            post("informacoes"){
+                val formParameters = call.receiveParameters()
+                val botao = formParameters["botao"]?.toInt()
+                if (botao != null) {
+                    passagem.assento = botao
+                }
+                call.respondRedirect("/skybook/informacoes")
+            }
+
+            get("assentos"){
+                val userDataCookie = call.request.cookies["userData"]
+                if (userDataCookie != null && userDataCookie!="false") {
+                    call.respond(FreeMarkerContent("assentoscadastrado.ftl", mapOf("passagem" to passagem,
+                        "pessoa" to pessoa
+                    )))
+                }
+                call.respond(FreeMarkerContent("assentos.ftl", model = null))
+            }
+
+            post("assentos"){
+                val formParameters = call.receiveParameters()
+                val botao = formParameters["botao"]?.split(".")?.joinToString("")
+                val vooSelecionado = listaVoos.find{ it.index == botao?.toInt() }
+                val compania = vooSelecionado?.compania.toString()
+                val preco = vooSelecionado?.preco
+                val hora = vooSelecionado?.hora.toString()
+
+                passagem.hora = hora
+                passagem.compania = compania
+                if (preco != null) {
+                    passagem.preco = preco
+                }
+                call.respondRedirect("/skybook/assentos")
+            }
+
+            get("pagamento"){
+                call.respond(FreeMarkerContent("pagamento.ftl", mapOf("passagem" to passagem)))
+            }
+            post("pagamento"){
+                val formParameters = call.receiveParameters()
+                passagem.nome = formParameters.getOrFail("nome")
+                passagem.email = formParameters.getOrFail("email")
+                passagem.telefone = formParameters.getOrFail("telefone")
+
+                call.respondRedirect("pagamento")
+            }
+            post("recibo") {
+                passagem.pagamento = true
+                call.respondRedirect("/skybook/recibo")
+            }
+            get("recibo"){
+                call.respond(FreeMarkerContent("print.ftl", mapOf("passagem" to passagem)))
+            }
+            post("passagens") {
+                val formParameters = call.receiveParameters()
+                val solicitacao = Solicitacao(formParameters.getOrFail("origem"), formParameters.getOrFail("destino"), formParameters.getOrFail("data"))
+                passagem.data = solicitacao.data
+                passagem.origem = solicitacao.origem
+                passagem.destino = solicitacao.destino
+
+                val userDataCookie = call.request.cookies["userData"]
+                if (userDataCookie != null && userDataCookie!="false") {
+                    call.respond(FreeMarkerContent("passagenscadastrada.ftl",
+                        mapOf("voos" to listaVoos.filter { it.origem == solicitacao.origem && it.destino == solicitacao.destino},
+                            "data" to solicitacao.data,
+                            "passagem" to passagem
+                        )))
+                }
+                call.respond(FreeMarkerContent("passagens.ftl",
+                    mapOf("voos" to listaVoos.filter { it.origem == solicitacao.origem && it.destino == solicitacao.destino},
+                        "data" to solicitacao.data
+                    )))
+            }
+            get("promocao") {
+                var pagina = "promocao.ftl"
+                val userDataCookie = call.request.cookies["userData"]
+                if (userDataCookie != null && userDataCookie!="false") {
+                    pagina = "promocaocadastrado.ftl"
+                }
+
+
+
+
+                if(passagem.origem == "")
+                call.respond(FreeMarkerContent(pagina,
+                    mapOf("passagem" to passagem,
+                        "voos" to listaVoos,
+                        "promocoes" to promocoes
+                )))
+                else {
+                    application.log.info("zzz")
+                    val passagensOrigem = listaVoos.filter { it.origem == passagem.origem}
+                    application.log.info("criou lista")
+                    val rangeOrigem = passagensOrigem.size
+                    application.log.info("de tamanho " + rangeOrigem)
+                    val promocoes_especificas: List<Int> = listOf(passagensOrigem[(0..rangeOrigem).random()].index, passagensOrigem[(0..rangeOrigem).random()].index, passagensOrigem[(0..rangeOrigem).random()].index, passagensOrigem[(0..rangeOrigem).random()].index, passagensOrigem[(0..rangeOrigem).random()].index, passagensOrigem[(0..rangeOrigem).random()].index)
+                    application.log.info("promoçoes selecionaddas " + promocoes_especificas[0])
+                    call.respond(FreeMarkerContent(pagina,
+                        mapOf("passagem" to passagem,
+                            "voos" to listaVoos,
+                            "promocoes" to promocoes_especificas
+                        )))
                 }
             }
         }

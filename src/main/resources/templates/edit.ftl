@@ -3,7 +3,7 @@
 <@layout.header>
     <div>
         <h3>Edit article</h3>
-        <form action="/articles/${article.id}" method="post">
+        <form action="/skybook/${article.id}" method="post">
             <p>
                 <input type="text" name="title" value="${article.title}">
             </p>
@@ -16,7 +16,7 @@
         </form>
     </div>
     <div>
-        <form action="/articles/${article.id}" method="post">
+        <form action="/skybook/${article.id}" method="post">
             <p>
                 <input type="submit" name="_action" value="delete">
             </p>
