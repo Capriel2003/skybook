@@ -141,31 +141,40 @@ fun Application.configureRouting() {
             get("informacoes"){
                 val userDataCookie = call.request.cookies["userData"]
                 if (userDataCookie != null && userDataCookie!="false") {
-                    call.respond(FreeMarkerContent("info-pessoacadastrada.ftl", mapOf("passagem" to passagem,
+                    call.respond(FreeMarkerContent("info-pessoa.ftl", mapOf("passagem" to passagem,
                         "pessoa" to pessoa
                     )))
                 }
-                call.respondRedirect("skybook/cadastros")
+                call.respondRedirect("/skybook/cadastros")
             }
             post("informacoes"){
-
-                    val formParameters = call.receiveParameters()
-                    val botao = formParameters["botao"]?.split(".")?.joinToString("")
-                    val vooSelecionado = listaVoos.find{ it.index == botao?.toInt() }
-                    val compania = vooSelecionado?.compania.toString()
-                    val preco = vooSelecionado?.preco
-
-                    passagem.compania = compania
-                    if (preco != null) {
-                        passagem.preco = preco
-                    }
-                    call.respondRedirect("/skybook/informacoes")
+                val formParameters = call.receiveParameters()
+                val botao = formParameters["botao"]?.toInt()
+                if (botao != null) {
+                    passagem.assento = botao
+                }
+                call.respondRedirect("/skybook/informacoes")
             }
 
-            get("assento"){
+            get("assentos"){
                 call.respond(FreeMarkerContent("assentos.ftl", mapOf("passagem" to passagem)))
             }
 
+            post("assentos"){
+                val formParameters = call.receiveParameters()
+                val botao = formParameters["botao"]?.split(".")?.joinToString("")
+                val vooSelecionado = listaVoos.find{ it.index == botao?.toInt() }
+                val compania = vooSelecionado?.compania.toString()
+                val preco = vooSelecionado?.preco
+                val hora = vooSelecionado?.hora.toString()
+
+                passagem.hora = hora
+                passagem.compania = compania
+                if (preco != null) {
+                    passagem.preco = preco
+                }
+                call.respondRedirect("/skybook/assentos")
+            }
 
             get("pagamento"){
                 call.respond(FreeMarkerContent("pagamento.ftl", mapOf("passagem" to passagem)))
@@ -175,11 +184,6 @@ fun Application.configureRouting() {
                 passagem.nome = formParameters.getOrFail("nome")
                 passagem.email = formParameters.getOrFail("email")
                 passagem.telefone = formParameters.getOrFail("telefone")
-                passagem.assento = (formParameters.getOrFail("assento")).toInt()
-
-                application.log.info(passagem.assento.toString())
-                application.log.info("zzz")
-                application.log.info(passagem.origem)
 
                 call.respondRedirect("pagamento")
             }

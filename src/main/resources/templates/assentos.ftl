@@ -85,8 +85,9 @@
         <div class="airplane-layout2">
             <!-- Assentos serão adicionados dinamicamente aqui -->
         </div>
-
-        <button class="reservation-button" onclick="reservarAssentos()">Reservar Assentos</button>
+        <form action="/skybook/informacoes" method="post">
+            <button class="reservation-button" name="botao" id = "botao">Reservar Assentos</button>
+        </form>
     </div>
 
 </div>
@@ -144,34 +145,11 @@
         // Desmarca todos os assentos selecionados
         const selectedSeats = document.querySelectorAll('.seat.selected');
         selectedSeats.forEach(selectedSeat => selectedSeat.classList.remove('selected'));
-
-        // Marca apenas o assento clicado
         this.classList.add("selected");
+        document.getElementById("botao").value = this.textContent;
 
-        // Obtém as informações do assento
-        const row = this.dataset.row;
-        const col = this.dataset.col;
-        const seatNumber = this.textContent;
-
-        // Exibe um alerta com as informações do assento
-        //alert(
-        //    `Você clicou no assento `
-        //);
     }
 
-    function reservarAssentos() {
-        const assentosSelecionados =
-            document.querySelectorAll(".seat.selected");
-
-        if (assentosSelecionados.length > 0) {
-            const assentosReservados = Array.from(assentosSelecionados).map(
-                (seat) => seat.textContent
-            );
-            //alert(`Assentos reservados: `);
-        } else {
-            //alert("Selecione pelo menos um assento antes de reservar.");
-        }
-    }
 </script>
 
 

@@ -8,6 +8,17 @@
             margin: 0;
         }
 
+        input[type=submit] {
+            width: 40%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
         .pagamento {
             width: 300px;
             text-align: center;
@@ -40,7 +51,6 @@
         }
 
         .pagamento-btn {
-            padding: 10px;
             border: none;
             width: 100%;
             cursor: pointer;
@@ -83,8 +93,8 @@
                 <option value="1">1x sem juros</option>
                 <option value="2">2x sem juros</option>
                 <option value="3">3x sem juros</option>
-                <option value="4">4x sem juros</option>
-                <option value="5">5x sem juros</option>
+                <option value="6">6x sem juros</option>
+                <option value="12">12x sem juros</option>
             </select>
             <input type="submit" value="Comprar" class="pagamento-btn" id="comprarBtn" disabled>
         </form>

@@ -38,7 +38,7 @@
 <#list voos as voo>
     <div id="passagens">
 <div class="passagem">
-    <form action="/skybook/informacoes" method="post">
+    <form action="/skybook/assentos" method="post">
         <h2 id = "compania">${voo.compania}</h2>
         <p id = "origem">Origem: ${voo.origem}</p>
         <p id = "destino"> Destino: ${voo.destino}</p>
