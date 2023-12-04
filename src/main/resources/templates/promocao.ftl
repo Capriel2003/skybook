@@ -30,11 +30,11 @@
             color: inherit; /* Herda a cor do texto do pai (evita cores padrão do link) */
         }
 
-        .card img {
-            width: 100%;
-            height: auto;
-            border-bottom: 1px solid #ddd;
-        }
+        /*.card img {*/
+        /*    width: 100%;*/
+        /*    height: auto;*/
+        /*    border-bottom: 1px solid #ddd;*/
+        /*}*/
 
         .card-content {
             padding: 15px;
@@ -50,6 +50,11 @@
         p {
             font-size: 14px;
             color: #666;
+        }
+
+        .img {
+            height: 300px;
+            width: 500px;
         }
 
         @media (max-width: 1200px) {
@@ -75,10 +80,15 @@
             <div class="card">
 
                 <a href="/skybook/passagens" name="card1">
-                    <img src="/static/Imagens/${voos[775].destino}.jpeg" alt="Imagem 1">
+                    <img src="/static/Imagens/${voos[promocoes[0]].destino}.jpg" alt="Imagem1" class = "img">
                     <div class="card-content">
-                        <h2>Título do Card 1</h2>
-                        <p>Alguma descrição curta do card.</p>
+                        <h2>${voos[promocoes[0]].destino}</h2>
+                        <p>Origem: ${voos[promocoes[0]].origem}</p>
+                        <p>Comapina aéria : ${voos[promocoes[0]].compania}</p>
+                        <p>Preco: R$${voos[promocoes[0]].preco},00</p>
+                        <form action="/skybook/assentos" method="post">
+                            <button name="botao" value="${voos[promocoes[0]].index}">Comprar</button>
+                        </form>
                     </div>
                 </a>
 
@@ -87,10 +97,15 @@
             <div class="card">
 
                 <a href="#" name="card2">
-                    <img src="/static/Imagens/${voos[214].destino}.jpeg" alt="Imagem 2">
+                    <img src="/static/Imagens/${voos[promocoes[1]].destino}.jpg" alt="Imagem 2" class = "img">
                     <div class="card-content">
-                        <h2>Título do Card 2</h2>
-                        <p>Outra descrição curta do card.</p>
+                        <h2>${voos[promocoes[1]].destino}</h2>
+                        <p>Origem: ${voos[promocoes[1]].origem}</p>
+                        <p>Comapina aéria : ${voos[promocoes[1]].compania}</p>
+                        <p>Preco: R$${voos[promocoes[1]].preco},00</p>
+                        <form action="/skybook/assentos" method="post">
+                            <button name="botao" value="${voos[promocoes[1]].index}">Comprar</button>
+                        </form>
                     </div>
                 </a>
 
@@ -99,10 +114,15 @@
             <div class="card">
 
                 <a href="#" name="card3">
-                    <img src="/static/Imagens/${voos[1282].destino}.jpeg" alt="Imagem 3">
+                    <img src="/static/Imagens/${voos[promocoes[2]].destino}.jpg" alt="Imagem 3" class = "img">
                     <div class="card-content">
-                        <h2>Título do Card 3</h2>
-                        <p>Mais uma descrição curta do card.</p>
+                        <h2>${voos[promocoes[2]].destino}</h2>
+                        <p>Origem: ${voos[promocoes[2]].origem}</p>
+                        <p>Comapina aéria : ${voos[promocoes[2]].compania}</p>
+                        <p>Preco: R$${voos[promocoes[2]].preco},00</p>
+                        <form action="/skybook/assentos" method="post">
+                            <button name="botao" value="${voos[promocoes[2]].index}">Comprar</button>
+                        </form>
                     </div>
                 </a>
 
@@ -111,10 +131,15 @@
             <div class="card">
 
                 <a href="#" name="card4">
-                    <img src="/static/Imagens/${voos[129].destino}.jpeg" alt="Imagem 1">
+                    <img src="/static/Imagens/${voos[promocoes[3]].destino}.jpg" alt="Imagem 1" class = "img">
                     <div class="card-content">
-                        <h2>Título do Card 1</h2>
-                        <p>Alguma descrição curta do card.</p>
+                        <h2>${voos[promocoes[3]].destino}</h2>
+                        <p>Origem: ${voos[promocoes[3]].origem}</p>
+                        <p>Comapina aéria : ${voos[promocoes[3]].compania}</p>
+                        <p>Preco: R$${voos[promocoes[3]].preco},00</p>
+                        <form action="/skybook/assentos" method="post">
+                            <button name="botao" value="${voos[promocoes[3]].index}">Comprar</button>
+                        </form>
                     </div>
                 </a>
 
@@ -123,10 +148,15 @@
             <div class="card">
 
                 <a href="/skybook/passagens" name="card5">
-                    <img src="/static/Imagens/Acre.jpeg" alt="Imagem 2">
+                    <img src="/static/Imagens/${voos[promocoes[4]].destino}.jpg" alt="Imagem 2" class = "img">
                     <div class="card-content">
-                        <h2>Título do Card 2</h2>
-                        <p>Outra descrição curta do card.</p>
+                        <h2>${voos[promocoes[4]].destino}</h2>
+                        <p>Origem: ${voos[promocoes[4]].origem}</p>
+                        <p>Comapina aéria : ${voos[promocoes[4]].compania}</p>
+                        <p>Preco: R$${voos[promocoes[4]].preco},00</p>
+                        <form action="/skybook/assentos" method="post">
+                            <button name="botao" value="${voos[promocoes[4]].index}">Comprar</button>
+                        </form>
                     </div>
                 </a>
 
@@ -135,10 +165,15 @@
             <div class="card" name="card6">
 
                 <a href="#">
-                    <img src="/static/Imagens/${voos[24].destino}.jpeg" alt="Imagem 3">
+                    <img src="/static/Imagens/${voos[promocoes[5]].destino}.jpg" alt="Imagem 3" class = "img">
                     <div class="card-content">
-                        <h2>Título do Card 3</h2>
-                        <p>Mais uma descrição curta do card.</p>
+                        <h2>${voos[promocoes[5]].destino}</h2>
+                        <p>Origem: ${voos[promocoes[5]].origem}</p>
+                        <p>Comapina aéria : ${voos[promocoes[5]].compania}</p>
+                        <p>Preco: R$${voos[promocoes[5]].preco},00</p>
+                        <form action="/skybook/assentos" method="post">
+                            <button name="botao" value="${voos[promocoes[5]].index}">Comprar</button>
+                        </form>
                     </div>
                 </a>
 
