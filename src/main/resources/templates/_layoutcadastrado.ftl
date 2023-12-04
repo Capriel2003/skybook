@@ -34,7 +34,7 @@
             <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarTogglerDemo02">
                 <div class="topo d-flex">
                     <a href="/skybook">Home</a>
-                    <a href="#">Promoções</a>
+                    <a href="/skybook/promocao">Promoções</a>
 
                     <div class="dropdown">
                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"

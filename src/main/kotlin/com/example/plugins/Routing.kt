@@ -157,7 +157,13 @@ fun Application.configureRouting() {
             }
 
             get("assentos"){
-                call.respond(FreeMarkerContent("assentos.ftl", mapOf("passagem" to passagem)))
+                val userDataCookie = call.request.cookies["userData"]
+                if (userDataCookie != null && userDataCookie!="false") {
+                    call.respond(FreeMarkerContent("assentoscadastrado.ftl", mapOf("passagem" to passagem,
+                        "pessoa" to pessoa
+                    )))
+                }
+                call.respond(FreeMarkerContent("assentos.ftl", model = null))
             }
 
             post("assentos"){
@@ -215,7 +221,8 @@ fun Application.configureRouting() {
                     )))
             }
             get("promocao") {
-                call.respond(FreeMarkerContent("promocao.ftl", mapOf("passagem" to passagem)))
+                call.respond(FreeMarkerContent("promocao.ftl", mapOf("passagem" to passagem, "voos" to listaVoos)
+                ))
             }
         }
     }

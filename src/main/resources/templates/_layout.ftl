@@ -32,7 +32,7 @@
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <div class="topo">
                     <a href="/skybook">Home</a>
-                    <a href="#">Promoções</a>
+                    <a href="/skybook/promocao">Promoções</a>
                     <a href="/skybook/cadastros">Cadastro</a>
                 </div>
             </div>

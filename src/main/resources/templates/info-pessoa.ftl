@@ -65,7 +65,7 @@
                 <div class="box">
                     <h3>Resumo do pedido</h3>
                     <hr>
-                    <h5> assento ${passagem.assento} -------------- <b>R$ ${passagem.preco} </b> </h5>
+                    <h5> Assento ${passagem.assento} -------------- <b>R$ ${passagem.preco} </b> </h5>
 
                     <label for="cupom">Insira aqui seu cupom de desconto</label>
                     <input

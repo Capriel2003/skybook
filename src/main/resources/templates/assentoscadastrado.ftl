@@ -1,5 +1,5 @@
 <#-- @ftlvariable name="article" type="com.example.models.Article" -->
-<#import "_layout.ftl" as layout />
+<#import "_layoutcadastrado.ftl" as layout />
 <@layout.header>
     <style>
         #body {
