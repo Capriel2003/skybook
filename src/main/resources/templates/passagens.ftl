@@ -1,53 +1,72 @@
 <#import "_layout.ftl" as layout />
-<@layout.header><!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Venda de Passagens Aéreas</title>
-    <style>
-        #passagens {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
+<@layout.header>
 
-        h1 {
-            text-align: center;
-        }
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 0;
+            }
 
-        .passagem {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-bottom: 15px;
-        }
+            h1 {
+                text-align: center;
+                color: #ffffff;
+                padding: 20px;
+                margin: 0;
+                margin-top: 10px;
+            }
 
-        button {
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
+            #passagens {
+                margin-top: 50px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 20px;
+                padding: 20px;
+            }
 
-<h1>Escolha sua Passagem Aérea</h1>
+            .passagem {
+                background: #ffffff;
+                border: 1px solid #ccc;
+                padding: 20px;
+                border-radius: 10px;
+                width: 300px;
+                text-align: center;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
 
-<#list voos as voo>
+            h2 {
+                color: #4CAF50;
+            }
+
+            button {
+                padding: 10px;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+        </style>
+
+    <h1><b>Escolha sua Passagem Aérea</b></h1>
+
     <div id="passagens">
-<div class="passagem">
-    <form action="/skybook/assentos" method="post">
-        <h2 id = "compania">${voo.compania}</h2>
-        <p id = "origem">Origem: ${voo.origem}</p>
-        <p id = "destino"> Destino: ${voo.destino}</p>
-        <p id = "data"> Data: ${data}</p>
-        <p id = "preco"> Preço: R$ ${voo.preco}</p>
-        <button name="botao" value="${voo.index}">Comprar</button>
-    </form>
-</div>
+        <#list voos as voo>
+            <div class="passagem">
+                <form action="/skybook/assentos" method="post">
+                    <h2 id="compania">${voo.compania}</h2>
+                    <p id="origem">Origem: ${voo.origem}</p>
+                    <p id="destino"> Destino: ${voo.destino}</p>
+                    <p id="data"> Data: ${data}</p>
+                    <p id="preco"> Preço: R$ ${voo.preco}</p>
+                    <button name="botao" value="${voo.index}">Comprar</button>
+                </form>
+            </div>
+        </#list>
     </div>
-</#list>
+
 
 </@layout.header>

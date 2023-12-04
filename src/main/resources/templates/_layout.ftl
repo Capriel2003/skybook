@@ -18,7 +18,7 @@
 
     </head>
 
-    <body style="text-align: center; font-family: sans-serif">
+    <body style="text-align: center; font-family: sans-serif;">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <img src="https://cdn-icons-png.flaticon.com/512/7893/7893979.png" alt="aviao" class="imageLogo">

@@ -39,30 +39,42 @@
     }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
-  <script>
-    function generatePDF() {
-      // Supondo que você tenha um objeto 'passagem' com um atributo 'nome'
-      var passagem = { nome: "Seu Nome" };
+<script>
+  function generatePDF() {
+    var pdf = new jsPDF({
+      orientation: 'p',
+      unit: 'mm',
+      format: 'a5',
+      putOnlyUsedFonts: true
+    });
 
-      var pdf = new jsPDF({
-        orientation: 'p',
-        unit: 'mm',
-        format: 'a5',
-        putOnlyUsedFonts:true
-      });
-      pdf.text(`Ticket Voo\n
+    // Adiciona o título do ticket
+    pdf.setFontSize(20);
+    pdf.setTextColor(41, 128, 185); // Cor azul
+    pdf.setFontStyle('bold');
+    pdf.text("Ticket Voo", 20,30, { align: 'center' });
+
+    // Adiciona os detalhes da passagem
+    pdf.setFontSize(14);
+    pdf.setTextColor(44, 62, 80); // Cor escura
+    pdf.setFontStyle('normal');
+
+
+    pdf.text(`
       Nome: ${passagem.nome} \n
-      ${passagem.email} \n
-      ${passagem.telefone}\n
-      ${passagem.assento} \n
-      ${passagem.origem} \n
-      ${passagem.destino} \n
-      ${passagem.preco}`, 10, 20);
-      pdf.save('reciboVoo.pdf');
-    }
-  </script>
+      Email: ${passagem.email}\n
+      Telefone: ${passagem.telefone}\n
+      Assento: ${passagem.assento}\n
+      Origem: ${passagem.origem}\n
+      Destino: ${passagem.destino}\n
+      Data: ${passagem.data} \t\t Hora: ${passagem.hora}\n
+      Preço: R$ ${passagem.preco},99\n
+    `,25,50, { align: 'center' });
 
-<body>
+    pdf.save('reciboVoo.pdf');
+  }
+</script>
+
 <div id="main">
 <div class="container">
   <h1>Baixe o seu ticket de viagem</h1>

@@ -30,7 +30,7 @@
     <div>
         <div class="content">
 
-            <object width="90%" height="90%" id="mapa" data="/static/files/mapa.svg" type="image/svg+xml" onload="setMapEvents()"></object>
+            <object style="margin-left: -250px" width="100%" height="100%" id="mapa" data="/static/files/mapa.svg" type="image/svg+xml" onload="setMapEvents()"></object>
 
 
 

@@ -1,7 +1,25 @@
 *{
+
     margin: 0;
     padding: 0;
     font-family: monospace;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+
+    background-color: #f4f4f4;
+    background-image: url("../Imagens/fundo.jpg");
+    background-position-y: bottom;
+    background-attachment: fixed;
+    background-size: 100%;
+    background-repeat: no-repeat;
+
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the body takes at least the full height of the viewport */
 }
 
 .topo{
@@ -27,7 +45,7 @@
 .content {
     display: flex;
     position: relative;
-    height: 100vh;
+    height: 91vh;
 }
 
 

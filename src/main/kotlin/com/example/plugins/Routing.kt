@@ -12,7 +12,7 @@ import io.ktor.server.util.*
 
 val range = listaVoos.size
 val promocoes: List<Int> = listOf((0..range).random(), (0..range).random(), (0..range).random(), (0..range).random(), (0..range).random(), (0..range).random())
-var passagem = Passagem("", "", "", "", "Amazonas", "", "", "",0.0, 0, false)
+var passagem = Passagem("", "", "", "", "Acre", "", "", "",0.0, 0, false)
 
 fun Application.configureRouting() {
     routing {
@@ -223,8 +223,17 @@ fun Application.configureRouting() {
                     )))
             }
             get("promocao") {
+                var pagina = "promocao.ftl"
+                val userDataCookie = call.request.cookies["userData"]
+                if (userDataCookie != null && userDataCookie!="false") {
+                    pagina = "promocaocadastrado.ftl"
+                }
+
+
+
+
                 if(passagem.origem == "")
-                call.respond(FreeMarkerContent("promocao.ftl",
+                call.respond(FreeMarkerContent(pagina,
                     mapOf("passagem" to passagem,
                         "voos" to listaVoos,
                         "promocoes" to promocoes
@@ -237,7 +246,7 @@ fun Application.configureRouting() {
                     application.log.info("de tamanho " + rangeOrigem)
                     val promocoes_especificas: List<Int> = listOf(passagensOrigem[(0..rangeOrigem).random()].index, passagensOrigem[(0..rangeOrigem).random()].index, passagensOrigem[(0..rangeOrigem).random()].index, passagensOrigem[(0..rangeOrigem).random()].index, passagensOrigem[(0..rangeOrigem).random()].index, passagensOrigem[(0..rangeOrigem).random()].index)
                     application.log.info("promoçoes selecionaddas " + promocoes_especificas[0])
-                    call.respond(FreeMarkerContent("promocao.ftl",
+                    call.respond(FreeMarkerContent(pagina,
                         mapOf("passagem" to passagem,
                             "voos" to listaVoos,
                             "promocoes" to promocoes_especificas

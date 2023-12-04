@@ -8,7 +8,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #ecf0f1;
             min-height: 91vh;
         }
 
