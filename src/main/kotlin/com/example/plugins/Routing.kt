@@ -11,8 +11,9 @@ import io.ktor.server.routing.*
 import io.ktor.server.util.*
 
 val range = listaVoos.size
+var data = (5..30).random().toString() + "/12/2023"
 val promocoes: List<Int> = listOf((0..range).random(), (0..range).random(), (0..range).random(), (0..range).random(), (0..range).random(), (0..range).random())
-var passagem = Passagem("", "", "", "", "Acre", "", "", "",0.0, 0, false)
+var passagem = Passagem("", "", "", "", "", "Acre", "", data, "",0.0, 0, false)
 
 fun Application.configureRouting() {
     routing {
@@ -32,48 +33,17 @@ fun Application.configureRouting() {
                     val email = userInfo[1]
                     val senha = userInfo[2]
                     passagem.nome = nome
+                    pessoa.nome = nome
                     passagem.email = email
                     pessoa.senha = senha
-                    call.respond(FreeMarkerContent("homecadastrado.ftl", mapOf("passagem" to passagem)))
+                    call.respond(FreeMarkerContent("homecadastrado.ftl", mapOf("passagem" to passagem,
+                        "pessoa" to pessoa
+                    )))
                 }
                 call.respond(FreeMarkerContent("home.ftl", model = null))
             }
             get("new") {
                 call.respond(FreeMarkerContent("new.ftl", model = null))
-            }
-            post {
-                val formParameters = call.receiveParameters()
-                val title = formParameters.getOrFail("title")
-                val body = formParameters.getOrFail("body")
-                val newEntry = Article.newEntry(title, body)
-                articles.add(newEntry)
-                call.respondRedirect("/skybook/${newEntry.id}")
-            }
-            get("{id}") {
-                val id = call.parameters.getOrFail<Int>("id").toInt()
-                call.respond(FreeMarkerContent("show.ftl", mapOf("article" to articles.find { it.id == id })))
-            }
-            get("{id}/edit") {
-                val id = call.parameters.getOrFail<Int>("id").toInt()
-                call.respond(FreeMarkerContent("edit.ftl", mapOf("article" to articles.find { it.id == id })))
-            }
-            post("{id}") {
-                val id = call.parameters.getOrFail<Int>("id").toInt()
-                val formParameters = call.receiveParameters()
-                when (formParameters.getOrFail("_action")) {
-                    "update" -> {
-                        val index = articles.indexOf(articles.find { it.id == id })
-                        val title = formParameters.getOrFail("title")
-                        val body = formParameters.getOrFail("body")
-                        articles[index].title = title
-                        articles[index].body = body
-                        call.respondRedirect("/skybook/$id")
-                    }
-                    "delete" -> {
-                        articles.removeIf { it.id == id }
-                        call.respondRedirect("/skybook")
-                    }
-                }
             }
 
             get("login"){
@@ -124,11 +94,12 @@ fun Application.configureRouting() {
                 if (userDataCookie != null && userDataCookie != "false") {
                     val userInfo = userDataCookie.split(":")
                     passagem.nome = userInfo[0]
+                    pessoa.nome = userInfo[0]
                     passagem.email = userInfo[1]
                     pessoa.senha = userInfo[2]
                     call.respond(FreeMarkerContent("homecadastrado.ftl", mapOf("pessoa" to pessoa)))
                 }
-                call.respond(FreeMarkerContent("home.ftl", mapOf("articles" to articles)))
+                call.respond(FreeMarkerContent("home.ftl", model = null))
             }
 
             post("logout") {
@@ -177,7 +148,7 @@ fun Application.configureRouting() {
                 val hora = vooSelecionado?.hora.toString()
 
                 passagem.hora = hora
-                passagem.compania = compania
+                passagem.companhia = compania
                 if (preco != null) {
                     passagem.preco = preco
                 }
@@ -185,13 +156,18 @@ fun Application.configureRouting() {
             }
 
             get("pagamento"){
-                call.respond(FreeMarkerContent("pagamento.ftl", mapOf("passagem" to passagem)))
+                call.respond(FreeMarkerContent("pagamento.ftl", mapOf("passagem" to passagem,
+                    "pessoa" to pessoa
+                )))
             }
             post("pagamento"){
                 val formParameters = call.receiveParameters()
                 passagem.nome = formParameters.getOrFail("nome")
                 passagem.email = formParameters.getOrFail("email")
                 passagem.telefone = formParameters.getOrFail("telefone")
+                passagem.cpf = formParameters.getOrFail("cpf")
+                application.log.info("zzz")
+                application.log.info(passagem.cpf)
 
                 call.respondRedirect("pagamento")
             }
@@ -200,7 +176,9 @@ fun Application.configureRouting() {
                 call.respondRedirect("/skybook/recibo")
             }
             get("recibo"){
-                call.respond(FreeMarkerContent("print.ftl", mapOf("passagem" to passagem)))
+                call.respond(FreeMarkerContent("print.ftl", mapOf("passagem" to passagem,
+                    "pessoa" to pessoa
+                )))
             }
             post("passagens") {
                 val formParameters = call.receiveParameters()
@@ -214,7 +192,8 @@ fun Application.configureRouting() {
                     call.respond(FreeMarkerContent("passagenscadastrada.ftl",
                         mapOf("voos" to listaVoos.filter { it.origem == solicitacao.origem && it.destino == solicitacao.destino},
                             "data" to solicitacao.data,
-                            "passagem" to passagem
+                            "passagem" to passagem,
+                            "pessoa" to pessoa
                         )))
                 }
                 call.respond(FreeMarkerContent("passagens.ftl",
@@ -236,8 +215,9 @@ fun Application.configureRouting() {
                 call.respond(FreeMarkerContent(pagina,
                     mapOf("passagem" to passagem,
                         "voos" to listaVoos,
-                        "promocoes" to promocoes
-                )))
+                        "promocoes" to promocoes,
+                        "pessoa" to pessoa
+                    )))
                 else {
                     application.log.info("zzz")
                     val passagensOrigem = listaVoos.filter { it.origem == passagem.origem}
@@ -245,11 +225,16 @@ fun Application.configureRouting() {
                     val rangeOrigem = passagensOrigem.size
                     application.log.info("de tamanho " + rangeOrigem)
                     val promocoes_especificas: List<Int> = listOf(passagensOrigem[(0..rangeOrigem).random()].index, passagensOrigem[(0..rangeOrigem).random()].index, passagensOrigem[(0..rangeOrigem).random()].index, passagensOrigem[(0..rangeOrigem).random()].index, passagensOrigem[(0..rangeOrigem).random()].index, passagensOrigem[(0..rangeOrigem).random()].index)
+                    val horas: List<Int> = listOf((0..23).random(), (0..23).random(), (0..23).random(), (0..23).random(), (0..23).random(), (0..23).random())
+                    val datas: List<String> = listOf((5..30).random().toString() + "/12/2023", (5..30).random().toString() + "/12/2023", (5..30).random().toString() + "/12/2023", (5..30).random().toString() + "/12/2023", (5..30).random().toString() + "/12/2023", (5..30).random().toString() + "/12/2023")
                     application.log.info("promoçoes selecionaddas " + promocoes_especificas[0])
                     call.respond(FreeMarkerContent(pagina,
                         mapOf("passagem" to passagem,
+                            "pessoa" to pessoa,
                             "voos" to listaVoos,
-                            "promocoes" to promocoes_especificas
+                            "promocoes" to promocoes_especificas,
+                            "horas" to horas,
+                            "datas" to datas
                         )))
                 }
             }

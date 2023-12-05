@@ -39,7 +39,7 @@
                     <div class="dropdown">
                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
-                            ${passagem.nome}
+                            ${pessoa.nome}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             <a class="dropdown-item" id="logoutLink" href="#">Deslogar</a>
