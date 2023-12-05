@@ -62,14 +62,14 @@
     pdf.text(`
       Nome: ${passagem.nome} \n
       Email: ${passagem.email}\n
+      Cpf: ${passagem.cpf}\n
       Telefone: ${passagem.telefone}\n
       Assento: ${passagem.assento}\n
       Origem: ${passagem.origem}\n
       Destino: ${passagem.destino}\n
       Data: ${passagem.data} \t\t Hora: ${passagem.hora}\n
-      Preço: R$ ${passagem.preco},99\n
+      Preço: R$ ${passagem.preco},00\n
     `,25,50, { align: 'center' });
-
     pdf.save('reciboVoo.pdf');
   }
 </script>

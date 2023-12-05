@@ -85,8 +85,10 @@
                     <div class="card-content">
                         <h2>${voos[promocoes[0]].destino}</h2>
                         <p>Origem: ${voos[promocoes[0]].origem}</p>
-                        <p>Companhia Aérea : ${voos[promocoes[0]].compania}</p>
-                        <p>Preco: R$${voos[promocoes[0]].preco},00</p>
+                        <p>Data: ${datas[0]}</p>
+                        <p>Horario: ${horas[0]}:00:00</p>
+                        <p>Companhia Aérea: ${voos[promocoes[0]].compania}</p>
+                        <p>Preço: R$${voos[promocoes[0]].preco},00</p>
                         <form action="/skybook/assentos" method="post">
                             <button name="botao" value="${voos[promocoes[0]].index}">Comprar</button>
                         </form>
@@ -102,8 +104,10 @@
                     <div class="card-content">
                         <h2>${voos[promocoes[1]].destino}</h2>
                         <p>Origem: ${voos[promocoes[1]].origem}</p>
-                        <p>Companhia Aérea : ${voos[promocoes[1]].compania}</p>
-                        <p>Preco: R$${voos[promocoes[1]].preco},00</p>
+                        <p>Data: ${datas[1]}</p>
+                        <p>Horario: ${horas[1]}:00:00</p>
+                        <p>Companhia Aérea: ${voos[promocoes[1]].compania}</p>
+                        <p>Preço: R$${voos[promocoes[1]].preco},00</p>
                         <form action="/skybook/assentos" method="post">
                             <button name="botao" value="${voos[promocoes[1]].index}">Comprar</button>
                         </form>
@@ -119,8 +123,10 @@
                     <div class="card-content">
                         <h2>${voos[promocoes[2]].destino}</h2>
                         <p>Origem: ${voos[promocoes[2]].origem}</p>
-                        <p>Companhia Aérea : ${voos[promocoes[2]].compania}</p>
-                        <p>Preco: R$${voos[promocoes[2]].preco},00</p>
+                        <p>Data: ${datas[2]}</p>
+                        <p>Horario: ${horas[2]}:00:00</p>
+                        <p>Companhia Aérea: ${voos[promocoes[2]].compania}</p>
+                        <p>Preço: R$${voos[promocoes[2]].preco},00</p>
                         <form action="/skybook/assentos" method="post">
                             <button name="botao" value="${voos[promocoes[2]].index}">Comprar</button>
                         </form>
@@ -136,8 +142,10 @@
                     <div class="card-content">
                         <h2>${voos[promocoes[3]].destino}</h2>
                         <p>Origem: ${voos[promocoes[3]].origem}</p>
-                        <p>Companhia Aérea : ${voos[promocoes[3]].compania}</p>
-                        <p>Preco: R$${voos[promocoes[3]].preco},00</p>
+                        <p>Data: ${datas[3]}</p>
+                        <p>Horario: ${horas[3]}:00:00</p>
+                        <p>Companhia Aérea: ${voos[promocoes[3]].compania}</p>
+                        <p>Preço: R$${voos[promocoes[3]].preco},00</p>
                         <form action="/skybook/assentos" method="post">
                             <button name="botao" value="${voos[promocoes[3]].index}">Comprar</button>
                         </form>
@@ -153,8 +161,10 @@
                     <div class="card-content">
                         <h2>${voos[promocoes[4]].destino}</h2>
                         <p>Origem: ${voos[promocoes[4]].origem}</p>
-                        <p>Companhia Aérea : ${voos[promocoes[4]].compania}</p>
-                        <p>Preco: R$${voos[promocoes[4]].preco},00</p>
+                        <p>Data: ${datas[5]}</p>
+                        <p>Horario: ${horas[5]}:00:00</p>
+                        <p>Companhia Aérea: ${voos[promocoes[4]].compania}</p>
+                        <p>Preço: R$${voos[promocoes[4]].preco},00</p>
                         <form action="/skybook/assentos" method="post">
                             <button name="botao" value="${voos[promocoes[4]].index}">Comprar</button>
                         </form>
@@ -170,8 +180,10 @@
                     <div class="card-content">
                         <h2>${voos[promocoes[5]].destino}</h2>
                         <p>Origem: ${voos[promocoes[5]].origem}</p>
-                        <p>Companhia Aérea : ${voos[promocoes[5]].compania}</p>
-                        <p>Preco: R$${voos[promocoes[5]].preco},00</p>
+                        <p>Data: ${datas[5]}</p>
+                        <p>Horario: ${horas[5]}:00:00</p>
+                        <p>Companhia Aérea: ${voos[promocoes[5]].compania}</p>
+                        <p>Preço: R$${voos[promocoes[5]].preco},00</p>
                         <form action="/skybook/assentos" method="post">
                             <button name="botao" value="${voos[promocoes[5]].index}">Comprar</button>
                         </form>

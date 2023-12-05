@@ -70,7 +70,7 @@
         }
     </style>
     <div id="pagamento">
-        <form class="pagamento" method="post" action="/skybook/recibo" onsubmit="return validarCartao()">
+        <form style="background-color: #ffffff; margin-top: 100px; border-radius: 2%" class="pagamento" method="post" action="/skybook/recibo" onsubmit="return validarCartao()">
             <div class="pagamento-header">
                 <h1 class="pagamento-title">
                     Pagamento

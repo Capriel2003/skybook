@@ -21,7 +21,16 @@
                                 value="${passagem.nome}"
                                 required="required"
                         />
-
+                        <label for="cpf">CPF:</label>
+                        <input
+                                type="text"
+                                class="text"
+                                id="cpf"
+                                name="cpf"
+                                pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
+                                placeholder="123.456.789-01"
+                                required
+                        />
                         <label for="e-mail">E-mail</label>
                         <input
                                 type="email"
@@ -45,7 +54,6 @@
                                 title="Número de telefone precisa ser no formato (99) 9999-9999"
                                 required="required"
                         />
-                        <br>
                         <input type="submit" value="Prosseguir">
                     </form>
                 </div>
@@ -53,7 +61,7 @@
             </div>
 
 
-            <div class="columnRevisao" style="padding-top: 35px; margin-top: 50px;background-color: #f2f2f2; border-radius: 10px;">
+            <div class="columnRevisao" style="padding-top: 35px; margin-top: 50px; background-color: #f2f2f2; border-radius: 10px;">
                 <div class="box" >
                     <h3>Resumo da viagem</h3>
                     <hr>
@@ -76,6 +84,7 @@
                             name="cupom"
                             placeholder="Exemplo: V14JAR"
                     />
+
                     <input type="submit" value="Submit">
                 </div>
 
